@@ -95,6 +95,20 @@
     & .trackComments {
         & > h2 {
             margin-bottom: 15px;
+            display: inline;
+        }
+        
+        & .commentSorting {
+            float: right;
+            font-size: 1.2em;
+            
+            span {
+              margin-right: 3px;
+            }
+            
+            & select {
+              color: #000;
+            }
         }
 
         & .comment {

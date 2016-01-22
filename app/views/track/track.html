@@ -48,10 +48,22 @@
          infinite-scroll-distance='0'
          infinite-scroll-container='".mainView"'
          infinite-scroll-immediate-check='false' >
+         
         <h2>Comments: ({{track.comment_count}})</h2>
+        <span class="commentSorting">
+          <span>Sort by:</span>
+          <select ng-model="sortBy" ng-init="sortBy = 'created_at'">
+            <option value="created_at">Date Created</option>
+            <option value="timestamp">Timestamp</option>
+          </select>
+          <select ng-model="sortByOrder" ng-init="sortByOrder = 'reverse'">
+            <option value="reverse">Descending</option>
+            <option value="">Ascending</option>
+          </select>
+        </span>
 
         <div class="commentsContainer">
-            <div class="comment" ng-repeat="comment in comments">
+            <div class="comment" ng-repeat="comment in comments | orderBy: sortBy: sortByOrder">
                 <img ng-src="{{comment.user.avatar_url}}" alt="{{comment.user.username}}" class="user_thumb" ui-sref="profile({ id: comment.user.id })">
 
                 <h3>
