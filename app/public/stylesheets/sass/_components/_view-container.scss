@@ -62,7 +62,12 @@
             font-size: 11px;
         }
     }
+    
     li:first-child {
         margin-left: 0;
+    }
+    
+    input[type="filter"]{
+        width: 60px;
     }
 }

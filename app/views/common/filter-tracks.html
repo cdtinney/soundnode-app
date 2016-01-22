@@ -1,33 +1,44 @@
 <h4>Filter tracks by:</h4>
 <ul>
     <li>
-        <label for="time">
-            <input type="checkbox" name="time" id="time" ng-model="time" ng-change="filter($event)">
-            <strong title="filter tracks by higher than 30 minutes "> > 30 minutes</strong>
+        <label for="length">
+            <input type="checkbox" name="length" id="length" ng-model="length" ng-change="filter($event)">
+            <strong title="filter tracks by duration greater than specified value">Minimum length: </strong>
+        </label>
+        <input type="filter" id="length" 
+          ng-model="min_length" 
+          ng-model-options='{ debounce: 500 }'
+          ng-init="min_length = '30'"
+          ng-change="filter($event)">
+        <span>minutes</span>
+    </li>
+    <li>
+        <label for="listens">
+            <input type="checkbox" name="listens" id="listens" ng-model="listens" ng-change="filter($event)">
+            <strong title="filter tracks by listened more than specified value">Minimum listens: </strong>
+        <input type="filter" id="listens" 
+          ng-model="min_listens" 
+          ng-model-options='{ debounce: 500 }'
+          ng-init="min_listens = '10000'"
+          ng-change="filter($event)">
         </label>
     </li>
     <li>
         <label for="all_reposts">
             <input type="checkbox" name="all_reposts" id="all_reposts" ng-model="all_reposts" ng-change="filter($event)">
-            <strong title="filter tracks by no reposts by all users"> no reposts</strong>
+            <strong title="filter tracks by no reposts by all users">No reposts</strong>
         </label>
     </li>
     <li>
         <label for="user_reposts">
             <input type="checkbox" name="user_reposts" id="user_reposts" ng-model="user_reposts" ng-change="filter($event)">
-            <strong title="filter tracks by no reposts by current user logged in"> no user reposts</strong>
-        </label>
-    </li>
-    <li>
-        <label for="listens">
-            <input type="checkbox" name="listens" id="listens" ng-model="listens" ng-change="filter($event)">
-            <strong title="filter tracks by listened more than 10k times"> > 10k listens</strong>
+            <strong title="filter tracks by no reposts by current user logged in"> No user reposts</strong>
         </label>
     </li>
     <li>
         <label for="downloads">
             <input type="checkbox" name="downloads" id="downloads" ng-model="downloads" ng-change="filter($event)">
-            <strong title="filter tracks by downloadable">downloads</strong>
+            <strong title="filter tracks by downloadable">Downloads only</strong>
         </label>
     </li>
 </ul>

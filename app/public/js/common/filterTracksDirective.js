@@ -12,12 +12,12 @@ app.directive('filterTracks', function (
 
             /**
              * Filter and return an new array of tracks
-             * with duration higher than 30mins
+             * with duration higher than min_length, specified by the user.
              * @param obj [track data]
              * @returns {boolean}
              */
-            function filterByTime(obj) {
-                var minutesInMilliseconds = 1800000; // 30 minutes in milliseconds
+            function filterByLength(obj) {
+                var minutesInMilliseconds = scope.min_length * 60000;
                 var duration = (obj.track !== undefined) ? obj.track.duration : obj.duration;
 
                 return duration >= minutesInMilliseconds
@@ -54,7 +54,7 @@ app.directive('filterTracks', function (
             function filterByListens(obj) {
                 var playbackCount = (obj.track !== undefined) ? obj.track.playback_count : obj.playback_count;
 
-                return playbackCount > 10000;
+                return playbackCount > scope.min_listens;
             }
             
             /**
@@ -76,8 +76,8 @@ app.directive('filterTracks', function (
 
                 scope.data = scope.originalData;
 
-                if ( scope.time ) {
-                    scope.data = scope.data.filter(filterByTime);
+                if ( scope.length ) {
+                    scope.data = scope.data.filter(filterByLength);
                 }
 
                 if ( scope.user_reposts ) {
