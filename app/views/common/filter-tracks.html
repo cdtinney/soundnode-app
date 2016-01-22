@@ -7,9 +7,15 @@
         </label>
     </li>
     <li>
-        <label for="reposts">
-            <input type="checkbox" name="reposts" id="reposts" ng-model="reposts" ng-change="filter($event)">
-            <strong title="filter tracks by no reposts by current user logged in"> no reposts</strong>
+        <label for="all_reposts">
+            <input type="checkbox" name="all_reposts" id="all_reposts" ng-model="all_reposts" ng-change="filter($event)">
+            <strong title="filter tracks by no reposts by all users"> no reposts</strong>
+        </label>
+    </li>
+    <li>
+        <label for="user_reposts">
+            <input type="checkbox" name="user_reposts" id="user_reposts" ng-model="user_reposts" ng-change="filter($event)">
+            <strong title="filter tracks by no reposts by current user logged in"> no user reposts</strong>
         </label>
     </li>
     <li>

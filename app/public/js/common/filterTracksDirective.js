@@ -24,14 +24,25 @@ app.directive('filterTracks', function (
             }
 
             /**
-             * Filter and return an new array of tracks not reposted by user
+             * Filter and return an new array of tracks not reposted by user logged in
              * @param obj [track data]
-             * @returns {*}
+             * @returns {boolean}
              */
-            function filterByReposts(obj) {
+            function filterByUserReposts(obj) {
                 var userReposted = (obj.track !== undefined) ? obj.track.user_reposted : obj.user_reposted;
 
                 return userReposted === false;
+            }
+
+            /**
+             * Filter and return an new array of tracks not reposted by any user
+             * @param obj [track data]
+             * @returns {boolean}
+             */
+            function filterByAllReposts(obj) {
+                var reposted = (obj !== undefined) ? obj.type === 'track-repost' : false;
+
+                return reposted === false;
             }
 
             /**
@@ -69,8 +80,12 @@ app.directive('filterTracks', function (
                     scope.data = scope.data.filter(filterByTime);
                 }
 
-                if ( scope.reposts ) {
-                    scope.data = scope.data.filter(filterByReposts);
+                if ( scope.user_reposts ) {
+                    scope.data = scope.data.filter(filterByUserReposts);
+                }
+
+                if ( scope.all_reposts ) {
+                    scope.data = scope.data.filter(filterByAllReposts);
                 }
 
                 if ( scope.listens ) {
