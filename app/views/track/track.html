@@ -61,9 +61,22 @@
             <option value="">Ascending</option>
           </select>
         </span>
+        
+        <div class="search">
+            <form class="search-form">
+                <input type="search" placeholder="Search" id="search" class="search_field"
+                       ng-model="keyword" ng-model-options="{debounce: 350}">
+                <i class="fa fa-search search-icon"></i>
+                <input type="submit" id="submit" value="Submit" class="searchButton"/>
+            </form>
+            <div class="dropdown" id="searchDropDown">
+            </div>
+        </div>
 
         <div class="commentsContainer">
-            <div class="comment" ng-repeat="comment in comments | orderBy: sortBy: sortByOrder">
+            <div class="comment" ng-repeat="comment in comments | 
+              orderBy: sortBy: sortByOrder | 
+              filter: commentFilter:comment">
                 <img ng-src="{{comment.user.avatar_url}}" alt="{{comment.user.username}}" class="user_thumb" ui-sref="profile({ id: comment.user.id })">
 
                 <h3>

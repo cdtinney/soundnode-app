@@ -65,6 +65,16 @@ app.controller('TrackCtrl', function (
                 utilsService.setCurrent();
             });
     };
+    
+    $scope.commentFilter  = function(comment) {
+    
+        if ($scope.keyword === undefined || comment.body === undefined) {
+            return true;
+        }
+        
+        return comment.body.indexOf($scope.keyword) != -1;
+        
+    };
 
 });
 
