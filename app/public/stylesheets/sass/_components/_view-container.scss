@@ -71,3 +71,20 @@
         width: 60px;
     }
 }
+
+/*
+* refresh stream 
+*/
+
+.streamView {
+    & .refresh {
+        float: right;
+        
+        & i {
+          &:hover {
+              color: #FFF;
+          }
+        
+        }
+    }
+}
