@@ -44,6 +44,11 @@ app.controller('SearchInputCtrl', function ($scope, $http, $state, $window, SCap
                         artists.appendChild(title);
 
                         for(var i = 0; i < 4; i++) {
+                        
+                            if (data.collection[i] === undefined) {
+                                continue;
+                            }
+                            
                             var child = document.createElement('div');
                             child.className = 'dropdown-item';
                             child.id = data.collection[i].id;
@@ -81,6 +86,11 @@ app.controller('SearchInputCtrl', function ($scope, $http, $state, $window, SCap
                         tracks.appendChild(title);
 
                         for(var i = 0; i < 4; i++) {
+                        
+                            if (data.collection[i] === undefined) {
+                                continue;
+                            }
+                            
                             var child = document.createElement('div');
                             var image = data.collection[i].artwork_url || 'public/img/logo-short.png';
                             child.className = 'dropdown-item';
