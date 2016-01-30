@@ -35,7 +35,7 @@ app.directive('filterTracks', function (
             }
 
             /**
-             * Filter an return an new array of the tracks
+             * Filter and return an new array of the tracks
              * with more than 10k plays
              * @param obj [track data]
              * @returns {boolean}
@@ -44,6 +44,17 @@ app.directive('filterTracks', function (
                 var playbackCount = (obj.track !== undefined) ? obj.track.playback_count : obj.playback_count;
 
                 return playbackCount > 10000;
+            }
+            
+            /**
+             * Filter and return a new array of the tracks that can be downloaded.
+             * @param obj [track data]
+             * @returns {boolean}
+             */
+            function filterByDownloads(obj) {
+                var downloadable = (obj.track !== undefined) ? obj.track.downloadable : obj.downloadable;
+                
+                return downloadable === true;
             }
 
             /**
@@ -64,6 +75,10 @@ app.directive('filterTracks', function (
 
                 if ( scope.listens ) {
                     scope.data = scope.data.filter(filterByListens);
+                }
+                
+                if ( scope.downloads ) {
+                    scope.data = scope.data.filter(filterByDownloads);
                 }
 
                 utilsService.setCurrent();

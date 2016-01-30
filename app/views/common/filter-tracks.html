@@ -18,4 +18,10 @@
             <strong title="filter tracks by listened more than 10k times"> > 10k listens</strong>
         </label>
     </li>
+    <li>
+        <label for="downloads">
+            <input type="checkbox" name="downloads" id="downloads" ng-model="downloads" ng-change="filter($event)">
+            <strong title="filter tracks by downloadable">downloads</strong>
+        </label>
+    </li>
 </ul>
