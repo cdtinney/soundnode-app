@@ -5,6 +5,7 @@
     </h1>
     
     <filter-tracks class="filterTracks" ></filter-tracks>
+    <sort-tracks class="sortTracks" ></sort-tracks>
 
     <!-- Song list wrapper -->
     <div class="streamView_inner">
@@ -14,7 +15,7 @@
             infinite-scroll-container='".mainView"'
             infinite-scroll-immediate-check='false' >
 
-            <li class="songList_item" ng-repeat="data in data">
+            <li class="songList_item" ng-repeat="data in data | orderBy: sortBy : sortByOrder">
 
                 <tracks data="data.track" type="data.type" user="data.user"/>
 

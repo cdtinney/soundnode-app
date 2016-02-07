@@ -1,0 +1,12 @@
+<h4>Sort by:</h4>
+<select ng-model="sortBy" ng-init="sortBy = 'created_at'">
+  <option value="created_at">Date</option>
+  <option value="track.duration">Duration</option>
+  <option value="track.title">Title</option>
+  <option value="track.playback_count">Play count</option>
+  <option value="track.favoritings_count">Likes count</option>
+</select>
+<select ng-model="sortByOrder" ng-init="sortByOrder = 'reverse'">
+  <option value="reverse">Descending</option>
+  <option value="">Ascending</option>
+</select>
