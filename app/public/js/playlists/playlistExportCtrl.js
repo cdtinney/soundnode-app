@@ -32,18 +32,33 @@ app.controller('PlaylistExportCtrl', function($scope, ngDialog) {
 
     }
     
+    /**
+     * Saves playlist to file in plaintext, with track links included.
+     * @param data [playlist to save]
+     * @param filename [default filename]
+     * @param callback [function to eval after completion)
+     * @method exportPlaintextLinks
+     */
     $scope.exportPlaintextLinks = function(data, filename, callback) {
         $scope.exportData($scope.formatTracks(data.tracks, true), 'text/plain', filename, callback);
     }
     
+    /**
+     * Saves playlist to file in plaintext.
+     * @param data [playlist to save]
+     * @param filename [default filename]
+     * @param callback [function to eval after completion)
+     * @method exportPlaintext
+     */
     $scope.exportPlaintext = function(data, filename, callback) {
         $scope.exportData($scope.formatTracks(data.tracks, false), 'text/plain', filename, callback);
     }
     
     /**
-     * Saves an object to file in JSON format. (taken from: http://stackoverflow.com/questions/30443238/save-json-to-file-in-angularjs)
-     * @param data [data to save]
+     * Saves playlist to file in JSON (original) format.
+     * @param data [playlist to save]
      * @param filename [default filename]
+     * @param callback [function to eval after completion)
      * @method exportJson
      */
     $scope.exportJson = function (data, filename, callback) {
@@ -56,6 +71,14 @@ app.controller('PlaylistExportCtrl', function($scope, ngDialog) {
       
     };
     
+    /**
+     * Saves data to file.
+     * @param data [data to save]
+     * @param type [content type, either JSON or plain]
+     * @param filename [default filename]
+     * @param callback [function to eval after completion)
+     * @method exportData
+     */
     $scope.exportData = function(data, type, filename, callback) { 
     
         var blob = new Blob([data], {type: type}),
@@ -64,7 +87,7 @@ app.controller('PlaylistExportCtrl', function($scope, ngDialog) {
 
         a.download = filename;
         a.href = window.URL.createObjectURL(blob);
-        a.dataset.downloadurl = ['text/plain', a.download, a.href].join(':');
+        a.dataset.downloadurl = [type, a.download, a.href].join(':');
         e.initMouseEvent('click', true, false, window,
             0, 0, 0, 0, 0, false, false, false, false, 0, null);
         a.dispatchEvent(e);
@@ -73,6 +96,12 @@ app.controller('PlaylistExportCtrl', function($scope, ngDialog) {
     
     }
     
+    /**
+    * Formats a list of tracks into a single string.
+    * @param tracks [list of tracks, in JSON format]
+    * @param link [if true, includes the permalink for each track]
+    * @method formatTracks
+    */
     $scope.formatTracks = function(tracks, link) {
 
       var str = "";
@@ -84,6 +113,12 @@ app.controller('PlaylistExportCtrl', function($scope, ngDialog) {
     
     }
     
+    /**
+    * Formats a track into a string.
+    * @param track [single track, in JSON format]
+    * @param link [if true, includes the permalink for the track]
+    * @method formatTrack
+    */
     $scope.formatTrack = function(track, link) {
     
         var str = track.user.username + " -- " + track.title
