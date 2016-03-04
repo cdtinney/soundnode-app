@@ -120,7 +120,13 @@ app.controller('PlaylistsCtrl', function (
      */
     $scope.exportPlaylist = function(playlistId) {
     
-    
+        for (var i=0; i < $scope.data.length; i++) {
+            var playlist = $scope.data[i];
+            if (playlist.id === playlistId) {
+                $scope.savePlaylistJSON(playlist, playlist.title);
+                return;
+            }
+        }
     
     };
 
@@ -140,4 +146,35 @@ app.controller('PlaylistsCtrl', function (
             return newSize;
         }
     };
+    
+    /**
+     * Saves an object to file in JSON format. (stolen from: http://stackoverflow.com/questions/30443238/save-json-to-file-in-angularjs)
+     * @param data [data to save]
+     * @param filename [filepath to save to]
+     * @method savePlaylistJSON
+     */
+    $scope.savePlaylistJSON = function (data, playlistName) {
+
+      if (!data) {
+        return;
+      }
+
+      filename = "SoundCloud_" + playlistName + ".json";
+      
+      if (typeof data === 'object') {
+        data = JSON.stringify(data, undefined, 2);
+      }
+
+      var blob = new Blob([data], {type: 'text/json'}),
+        e = document.createEvent('MouseEvents'),
+        a = document.createElement('a');
+
+      a.download = filename;
+      a.href = window.URL.createObjectURL(blob);
+      a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+      e.initMouseEvent('click', true, false, window,
+          0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      a.dispatchEvent(e);
+    };
+    
 });
