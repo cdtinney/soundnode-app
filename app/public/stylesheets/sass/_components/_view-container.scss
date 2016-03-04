@@ -51,7 +51,7 @@
 
     ul {
         margin-top: 10px;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
     }
 
     li {
@@ -70,6 +70,22 @@
     input[type="filter"]{
         width: 60px;
     }
+}
+
+/*
+* sort tracks 
+*/
+.sortTracks {
+
+    & h4 {
+        font-size: 12px
+    }
+    
+    & select {
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+    
 }
 
 /*
