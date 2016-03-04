@@ -6,7 +6,7 @@ app.controller('PlaylistsCtrl', function (
     $rootScope,
     notificationFactory,
     modalFactory,
-    utilsService,
+    utilsService
 ) {
     var endpoint = 'me/playlists'
         , params = 'representation=compact';

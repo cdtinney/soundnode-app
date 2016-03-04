@@ -19,10 +19,13 @@
   
   & .playlist_item_info {
     display: inline-block;
-    width: 150px;
+    width: 300px;
     font-size: 12px;  
     & .fa {
       cursor: default;
+    }
+    & span {
+      margin-right: 10px;
     }
   }
   
@@ -34,6 +37,9 @@
         cursor: pointer;
       }    
     }    
+    & span {
+      margin-right: 10px;
+    }
   }
 
 }
@@ -78,10 +84,3 @@
   }
 
 }
-
-
-
-
-
-
-
