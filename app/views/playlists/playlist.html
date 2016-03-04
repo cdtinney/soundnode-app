@@ -1,0 +1,25 @@
+<div class="playlistView">
+    <h1> {{ title }} </h1>
+    
+    <!-- TODO - info/controls -->    
+    <!-- TODO - filter, sort (model after stream) -->
+
+    <!-- Song list wrapper -->
+    <div class="playlistView_inner">
+        <ul class="songList"
+            infinite-scroll='loadMore()'
+            infinite-scroll-distance='0'
+            infinite-scroll-container='".mainView"'
+            infinite-scroll-immediate-check='false' >
+
+            <li class="songList_item" ng-repeat="track in data.tracks" ng-if="track.kind == 'track' && track.streamable" >
+                <tracks data="track"/>
+            </li>
+            
+        </ul>
+    </div>
+    <!-- Song list wrapper / end -->
+
+    <div ng-include="'views/common/loading.html'"></div>
+
+</div>

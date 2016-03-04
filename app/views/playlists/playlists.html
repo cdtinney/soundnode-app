@@ -10,7 +10,7 @@
 
                 <div>
                   <span class="playlist_item_tit_container">
-                    <span class="playlist_item_tit">{{ data.title }}</span>
+                    <span ui-sref="playlist({ id: data.id, title: data.title })" class="playlist_item_tit">{{ data.title }}</span>
                   </span>
                 
                   <span class="playlist_item_info">

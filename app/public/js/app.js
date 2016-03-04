@@ -51,6 +51,11 @@ app.config(function (
             templateUrl: 'views/playlists/playlists.html',
             controller: 'PlaylistsCtrl'
         })
+        .state('playlist', {
+            url: '/playlist/:id?title',
+            templateUrl: 'views/playlists/playlist.html',
+            controller: 'PlaylistCtrl'
+        })
         .state('search', {
             url: '/search?q',
             templateUrl: 'views/search/search.html',
