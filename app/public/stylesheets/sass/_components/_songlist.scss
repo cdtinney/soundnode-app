@@ -135,9 +135,10 @@ div.active {
   bottom: 0;
   width: 100%;
   color: #FFF;
+  background: rgba(0,0,0,0.6);
   font-size: 12px;
   padding: 5px 0;
-  display: none;
+  display: flex;
 }
 
 .songList_item_song_social_details > span {
