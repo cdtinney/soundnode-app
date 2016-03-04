@@ -112,6 +112,17 @@ app.controller('PlaylistsCtrl', function (
                     });
             });
     };
+    
+    /**
+     * Responsible to export entire playlist
+     * @params playlistId [playlist id]
+     * @method exportPlaylist
+     */
+    $scope.exportPlaylist = function(playlistId) {
+    
+    
+    
+    };
 
     /**
      * Responsible to check if there's a artwork

@@ -20,9 +20,20 @@
   & .playlist_item_info {
     display: inline-block;
     width: 150px;
+    font-size: 12px;  
+    & .fa {
+      cursor: default;
+    }
   }
   
   & .playlist_item_controls {
+    font-size: 12px;    
+    & a {
+      margin-right: 4px;
+      &:hover {
+        cursor: pointer;
+      }    
+    }    
   }
 
 }
