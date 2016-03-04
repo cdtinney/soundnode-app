@@ -31,7 +31,7 @@ app.controller('PlaylistsCtrl', function (
      */
     $scope.removePlaylist = function(playlistId) {
         modalFactory
-            .confirm('Do you really want to delete the playlist?')
+            .confirm('Are you sure? Deleting is forever – you won’t be able to get this playlist back.')
             .then(function () {
                 SCapiService.removePlaylist(playlistId)
                     .then(function(response) {

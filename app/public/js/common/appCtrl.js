@@ -18,10 +18,14 @@ app.controller('AppCtrl', function ($rootScope, $scope, $window, $log, ngDialog)
     // Format song duration on tracks
     // for human reading
     $scope.formatSongDuration = function (duration) {
+    
+        if (isNaN(duration)) return "";
+    
         var minutes = Math.floor(duration / 60000)
             , seconds = ((duration % 60000) / 1000).toFixed(0);
 
         return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+        
     };
 
     /*
