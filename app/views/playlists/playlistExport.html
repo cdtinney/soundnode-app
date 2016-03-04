@@ -1,0 +1,13 @@
+<div class="playlistExport">
+    <div ng-include="'views/common/modals/confirm.html'"></div>
+
+    <span class="playlistExport_format">
+      <label for="format">Select a format: </label>
+      <select name="format" ng-model="exportFormat" ng-init="exportFormat = 'json'">
+        <option value="json">JSON</option>
+        <option value="plaintext">Plaintext</option>
+        <option value="plaintextLinks">Plaintext with links</option>
+      </select>
+    </span>
+    
+</div>

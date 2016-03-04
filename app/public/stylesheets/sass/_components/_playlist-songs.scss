@@ -38,28 +38,45 @@
 
 }
 
-/*
-* Playlist dashboard
+/* 
+* Playlist export - modal 
 */
-.playlistDashboard_field {
-  width: 300px;
-}
+.playlistExport {
 
-.playlistDashboard_list {
-  margin: 20px 0;
-}
-.playlistDashboard_list_item {
-  overflow: hidden;
-  padding: 10px 0;
-
-  &:hover {
-    background: $sectionBackground;
-    cursor: pointer;
+  & .playlistExport_format {
+    & label {
+      margin-right: 40px;
+    }
   }
+
 }
 
-.playlistDashboard_selectedSong {
-  color: #fff;
+/*
+* Playlist dashboard - modal
+*/
+.playlistDashboard {
+
+  & .playlistDashboard_field {
+    width: 300px;
+  }
+
+  & .playlistDashboard_list {
+    margin: 20px 0;
+  }
+  & .playlistDashboard_list_item {
+    overflow: hidden;
+    padding: 10px 0;
+
+    &:hover {
+      background: $sectionBackground;
+      cursor: pointer;
+    }
+  }
+
+  & .playlistDashboard_selectedSong {
+    color: #fff;
+  }
+
 }
 
 
