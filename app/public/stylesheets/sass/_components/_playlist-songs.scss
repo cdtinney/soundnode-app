@@ -32,8 +32,10 @@
     }
   }
   
-  & .playlist_item_controls {
+  & .playlist_item_controls, & .playlist_item_shared {
+    display: inline-block;
     font-size: 12px;    
+    width: 300px;
     & a {
       margin-right: 4px;
       &:hover {
@@ -47,37 +49,13 @@
 
 }
 
-/* Playlist view
-*
+/* 
+* Playlists view 
 */
-.playlistView {
-
-  & .playlistView_info {
-    margin-bottom: 20px;  
-    font-size: 17px;
-    
-    & .playlist_item_info {
-      display: inline-block;
-      width: 300px;
-      & .fa {
-        cursor: default;
-      }
-      & span {
-        margin: 0 20px 0 0;
-      }
-    }
-    
-    & .playlist_item_controls {
-      display: inline-block;
-      float: right;
-      & a {
-        margin: 0 0 0 20px;
-        &:hover {
-          cursor: pointer;
-        }    
-      }    
-    }
-    
+.playlistsView {
+  
+  & h2 {
+    margin: 30px 0px 30px;
   }
   
 }
