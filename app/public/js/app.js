@@ -56,6 +56,11 @@ app.config(function (
             templateUrl: 'views/playlists/playlist.html',
             controller: 'PlaylistCtrl'
         })
+        .state('sharedPlaylists', {
+            url: '/sharedPlaylists',
+            templateUrl: 'views/playlists/sharedPlaylists.html',
+            controller: 'SharedPlaylistsCtrl'
+        })
         .state('search', {
             url: '/search?q',
             templateUrl: 'views/search/search.html',

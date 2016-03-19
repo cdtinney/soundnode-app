@@ -1,9 +1,8 @@
 'use strict';
 
-app.controller('PlaylistsCtrl', function (
+app.controller('SharedPlaylistsCtrl', function (
     $scope,
     SCapiService,
-    SNapiService,
     $rootScope,
     notificationFactory,
     modalFactory,
@@ -12,7 +11,7 @@ app.controller('PlaylistsCtrl', function (
     var endpoint = 'me/playlists'
         , params = 'representation=compact';
 
-    $scope.title = 'Playlists';
+    $scope.title = 'Shared Playlists';
     $scope.data = '';
 
     SCapiService.get(endpoint, params)
@@ -46,25 +45,6 @@ app.controller('PlaylistsCtrl', function (
                         $('#' + playlistId).remove();
                     });
             });
-    };
-    
-    /** 
-    * Converts a regular playlist into a shared playlist.
-    * @params playlistID [the ID of the playlist to convert]
-    * @method sharePlaylist
-    */
-    $scope.sharePlaylist = function(playlistId) {
-    
-        SNapiService.sharePlaylist(playlistId)
-            .then(function(response) {
-                if ( typeof response === 'object' ) {
-                    notificationFactory.success("Playlist shared!");
-                        $('#' + playlistId).remove();
-                }
-            }, function(error) {
-                notificationFactory.error("Something went wrong!");
-            });
-            
     };
     
 });
