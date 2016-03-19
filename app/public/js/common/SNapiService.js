@@ -16,6 +16,22 @@ app.service('SNapiService', function (
     var SOUNDNODE_API = "http://localhost:9000/";
     
     // Public API
+    
+    /**
+    * Get all shared playlists for the user
+    * @return {promise}
+    */
+    this.getPlaylists = function(userId) {
+        
+        var params = {
+            id: userId
+        };
+    
+        return get('get', { params : params })
+            .then(onResponseSuccess)
+            .catch(onResponseError);
+    
+    };
 
     /**
      * Set playlist as shared
@@ -27,7 +43,7 @@ app.service('SNapiService', function (
             id: playlistId
         };
     
-        return postRequest('sharePlaylist', { params : params })
+        return post('share', { params : params })
             .then(onResponseSuccess)
             .catch(onResponseError);
     
@@ -36,15 +52,23 @@ app.service('SNapiService', function (
     // Private methods
     
     /**
-    * Utility method to send HTTP post request
+    * Utility method to send an HTTP GET request
     * TODO - add params
     */
-    function postRequest(resource, config, options) {
+    function get(resource, config, options) {    
+        config = config || {};
+        config.method = "GET";
+        return sendRequest(resource, config, options);        
+    }
     
+    /**
+    * Utility method to send an HTTP post request
+    * TODO - add params
+    */
+    function post(resource, config, options) {    
         config = config || {};
         config.method = "POST";
-        return sendRequest(resource, config, options);
-        
+        return sendRequest(resource, config, options);        
     }
 
     /**

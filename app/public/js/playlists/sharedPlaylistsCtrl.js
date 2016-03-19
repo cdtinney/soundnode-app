@@ -3,25 +3,22 @@
 app.controller('SharedPlaylistsCtrl', function (
     $scope,
     SCapiService,
+    SNapiService,
     $rootScope,
     notificationFactory,
     modalFactory,
     utilsService
 ) {
-    var endpoint = 'me/playlists'
-        , params = 'representation=compact';
 
     $scope.title = 'Shared Playlists';
     $scope.data = '';
-
-    SCapiService.get(endpoint, params)
+    
+    SNapiService.getPlaylists($rootScope.userId)
         .then(function(data) {
-            $scope.data = data;
+            console.log(data);
+            // TODO - Get SC playlist information
         }, function(error) {
-            console.log('error', error);
-        }).finally(function(){
-            $rootScope.isLoading = false;
-            utilsService.setCurrent();
+            console.log('Unable to load shared playlists - ', error);
         });
 
     /**
