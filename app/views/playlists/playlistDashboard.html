@@ -3,13 +3,14 @@
 
     <!-- create new playlist -->
     <header class="playlistDashboard_title">
-        <p>Where do you want to add: <span class="playlistDashboard_selectedSong">{{ playlistSongName }}</span></p>
+        <p>Where do you want to add:<span class="playlistDashboard_selectedSong"> {{ playlistSongName }} </span>?</p>
         <form ng-submit="createPlaylistAndSaveSong()">
-            <input type="text" name="new_playlist" id="newPlaylist" placeholder="Create a new playlist and add selected song..." class="playlistDashboard_field" ng-model="playlistName">
+            <input type="text" name="new_playlist" id="newPlaylist" placeholder="Create a new playlist" class="playlistDashboard_field" ng-model="playlistName">
         </form>
     </header>
     <!-- create new playlist /  -->
 
+    <!-- existing playlists -->
     <ul class="playlistDashboard_list">
         <li class="playlistDashboard_list_item" ng-repeat="data in data" ng-click="saveToPlaylist(data.id)">
             <div class="mediaBox_wrapper">
@@ -26,4 +27,6 @@
             </div>
         </li>
     </ul>
+    <!-- existing playlists /  -->
+    
 </div>

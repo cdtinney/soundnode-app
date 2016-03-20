@@ -113,6 +113,27 @@
 */
 .playlistDashboard {
 
+  & input {
+    &:hover {
+      cursor: text;
+    }    
+  }
+
+  & img {
+    width: 25px;
+  }
+
+  & h4 {
+    display: inline-block;
+    width: 300px;
+  }
+    
+  & img, span, h4 {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   & .playlistDashboard_field {
     width: 300px;
   }
