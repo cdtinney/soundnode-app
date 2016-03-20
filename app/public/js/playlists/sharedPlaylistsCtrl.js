@@ -44,4 +44,23 @@ app.controller('SharedPlaylistsCtrl', function (
             });
     };
     
+    /** 
+    * Converts a regular playlist into a shared playlist.
+    * @params playlistID [the ID of the playlist to convert]
+    * @method sharePlaylist
+    */
+    $scope.sharePlaylist = function(playlistId) {
+    
+        SNapiService.sharePlaylist($rootScope.userId, playlistId)
+            .then(function(response) {
+                if ( typeof response === 'object' ) {
+                    notificationFactory.success("Playlist shared!");
+                        $('#' + playlistId).remove();
+                }
+            }, function(error) {
+                notificationFactory.error("Something went wrong!");
+            });
+            
+    };
+    
 });

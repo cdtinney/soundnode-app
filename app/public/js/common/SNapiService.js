@@ -13,7 +13,7 @@ app.service('SNapiService', function (
      * SoundNode Server API endpoint
      * @type {String}
      */
-    var SOUNDNODE_API = "http://localhost:9000/";
+    var SOUNDNODE_API = "http://localhost:3000/"
     
     // Public API
     
@@ -24,7 +24,7 @@ app.service('SNapiService', function (
     this.getPlaylists = function(userId) {
         
         var params = {
-            id: userId
+            userId: userId
         };
     
         return get('get', { params : params })
@@ -37,10 +37,11 @@ app.service('SNapiService', function (
      * Set playlist as shared
      * @return {promise}
      */
-    this.sharePlaylist = function (playlistId) {
+    this.sharePlaylist = function (userId, playlistId) {
         
         var params = {
-            id: playlistId
+            userId: userId,
+            playlistId: playlistId
         };
     
         return post('share', { params : params })
@@ -89,12 +90,7 @@ app.service('SNapiService', function (
         }
         
         config.params = config.params || {};
-
         options = options || {};
-        if (options.loading !== false) {
-            $rootScope.isLoading = true;
-        }
-
         return $http(config);
     }
 

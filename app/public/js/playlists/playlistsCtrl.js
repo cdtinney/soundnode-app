@@ -55,7 +55,7 @@ app.controller('PlaylistsCtrl', function (
     */
     $scope.sharePlaylist = function(playlistId) {
     
-        SNapiService.sharePlaylist(playlistId)
+        SNapiService.sharePlaylist($rootScope.userId, playlistId)
             .then(function(response) {
                 if ( typeof response === 'object' ) {
                     notificationFactory.success("Playlist shared!");
