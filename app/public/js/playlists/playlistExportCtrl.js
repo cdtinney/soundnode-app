@@ -1,6 +1,6 @@
 "use strict"
 
-app.controller('PlaylistExportCtrl', function($scope, ngDialog) {
+app.controller('PlaylistExportCtrl', function($scope, ngDialog, SCapiService) {
 
     /**
     * Exports a playlist to file.
@@ -24,11 +24,24 @@ app.controller('PlaylistExportCtrl', function($scope, ngDialog) {
         if (playlist === null) {
             return;
         }
-  
-        if (exportFunctions[$scope.exportFormat]) {
-            var filename = filePrefix + "_" + playlist.title + extensions[$scope.exportFormat];
-            exportFunctions[$scope.exportFormat](playlist, filename, $scope.closeModal);
-        }
+        
+        // Fetch playlist tracks
+        SCapiService.getPlaylist(playlist.id).then(function(data) {
+        
+            if (data === undefined) {
+                console.log("Error - could retrieve playlist information - id: " + playlist.id);
+                
+            } else {
+            
+                if (exportFunctions[$scope.exportFormat]) {
+                    var filename = filePrefix + "_" + data.title + extensions[$scope.exportFormat];
+                    exportFunctions[$scope.exportFormat](data, filename, $scope.closeModal);
+                }
+                
+            }
+        
+        
+        });
 
     }
     
