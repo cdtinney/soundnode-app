@@ -18,7 +18,7 @@ app.controller('PlaylistsCtrl', function (
     SCapiService.get(endpoint, params)
         .then(function(data) {
     
-            SNapiService.getPlaylists()
+            SNapiService.get()
                 .then(function(snData) {
                     
                     $scope.data = data.filter(function(obj) {
@@ -72,11 +72,11 @@ app.controller('PlaylistsCtrl', function (
     */
     $scope.sharePlaylist = function(playlistId) {
     
-        SNapiService.sharePlaylist(playlistId)
+        SNapiService.share(playlistId)
             .then(function(response) {
                 if ( typeof response === 'object' ) {
                     notificationFactory.success("Playlist shared!");
-                        $('#' + playlistId).remove();
+                    $('#' + playlistId).remove();
                 }
             }, function(error) {
                 notificationFactory.error("Something went wrong!");

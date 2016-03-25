@@ -18,7 +18,7 @@ app.controller('SharedPlaylistsCtrl', function (
     SCapiService.get(endpoint, params)
         .then(function(data) {
     
-            SNapiService.getPlaylists()
+            SNapiService.get()
                 .then(function(snData) {
                     
                     $scope.data = data.filter(function(obj) {
@@ -43,11 +43,11 @@ app.controller('SharedPlaylistsCtrl', function (
         });
 
     /**
-     * Responsible to delete entire playlist
+     * Delete entire playlist.
      * @params playlistId [playlist id]
-     * @method removePlaylist
+     * @method remove
      */
-    $scope.removePlaylist = function(playlistId) {
+    $scope.remove = function(playlistId) {
         modalFactory
             .confirm('Are you sure? Deleting is forever – you won’t be able to get this playlist back.')
             .then(function () {
@@ -61,6 +61,27 @@ app.controller('SharedPlaylistsCtrl', function (
                     })
                     .finally(function() {
                         $('#' + playlistId).remove();
+                    });
+            });
+    };
+    
+    /**
+     * Stop sharing a playlist.
+     * @params playlistId [playlist id]
+     * @method unshare
+     */
+    $scope.unshare = function(playlistId) {
+        modalFactory
+            .confirm('Are you sure you want to unshare this playlist? Collaborators will no longer be able to access it.')
+            .then(function () {
+                SNapiService.unshare(playlistId)
+                    .then(function(response) {
+                        if ( typeof response === 'object' ) {
+                            notificationFactory.success("Playlist unshared!");                            
+                            $('#' + playlistId).remove();
+                        }
+                    }, function(error) {
+                        notificationFactory.error("Something went wrong!");
                     });
             });
     };

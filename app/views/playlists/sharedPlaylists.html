@@ -19,12 +19,12 @@
                   </span>
                   
                   <span class="playlist_item_controls">
-                      <a ng-click="removePlaylist(data.id)"> <i class="fa fa-trash"></i> delete</a>
+                      <a ng-click="remove(data.id)"> <i class="fa fa-trash"></i> delete</a>
                       <a export> <i class="fa fa-floppy-o"></i> export</a>
                   </span>                  
                   
                   <span class="playlist_item_shared">
-                      <a ng-click="setSharedPlaylist(data.id)"> <i class="fa fa-times"></i> unshare</a>
+                      <a ng-click="unshare(data.id)"> <i class="fa fa-times"></i> unshare</a>
                       <a ng-click="editCollaborators(data.id)"> <i class="fa fa-pencil"></i> edit users</a>
                       <span><i class="fa fa-check"></i> owner</span>
                   </span>

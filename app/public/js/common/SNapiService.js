@@ -21,7 +21,7 @@ app.service('SNapiService', function (
     * Get all shared playlists for the user
     * @return {promise}
     */
-    this.getPlaylists = function() {
+    this.get = function() {
         
         var params = {
             userId: $rootScope.userId
@@ -34,10 +34,10 @@ app.service('SNapiService', function (
     };
 
     /**
-     * Set playlist as shared
+     * Set playlist to shared
      * @return {promise}
      */
-    this.sharePlaylist = function (playlistId) {
+    this.share = function(playlistId) {
         
         var params = {
             userId: $rootScope.userId,
@@ -49,6 +49,24 @@ app.service('SNapiService', function (
             .catch(onResponseError);
     
     };     
+    
+    /**
+    * Set playlist to unshared
+    * @return {promise}
+    */
+    this.unshare = function(playlistId) {
+        
+        var params = {
+            userId: $rootScope.userId,
+            playlistId: playlistId
+        };
+    
+        return post('unshare', { params : params })
+            .then(onResponseSuccess)
+            .catch(onResponseError);
+    
+    
+    };
 
     // Private methods
     
