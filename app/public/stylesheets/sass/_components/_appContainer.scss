@@ -16,6 +16,10 @@
 */
 .modalView {
   font-size: 15px;
+  
+  & .modalView_footer {
+    margin: 20px 0 0 0;
+  }
 }
 .modalView_content {
 
