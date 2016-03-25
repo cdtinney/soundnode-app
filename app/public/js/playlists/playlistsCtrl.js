@@ -14,10 +14,27 @@ app.controller('PlaylistsCtrl', function (
 
     $scope.title = 'Playlists';
     $scope.data = '';
-
+    
     SCapiService.get(endpoint, params)
         .then(function(data) {
-            $scope.data = data;
+    
+            SNapiService.getPlaylists()
+                .then(function(snData) {
+                    
+                    $scope.data = data.filter(function(obj) {
+                    
+                        for (var i=0; i<snData.length; i++) {
+                            if (snData[i].playlistId == obj.id) return false;
+                        }
+                        
+                        return true;
+                        
+                    });
+                
+                }, function(error) {
+                    console.log('error', error);
+                });
+                
         }, function(error) {
             console.log('error', error);
         }).finally(function(){
@@ -55,7 +72,7 @@ app.controller('PlaylistsCtrl', function (
     */
     $scope.sharePlaylist = function(playlistId) {
     
-        SNapiService.sharePlaylist($rootScope.userId, playlistId)
+        SNapiService.sharePlaylist(playlistId)
             .then(function(response) {
                 if ( typeof response === 'object' ) {
                     notificationFactory.success("Playlist shared!");

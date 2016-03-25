@@ -9,16 +9,37 @@ app.controller('SharedPlaylistsCtrl', function (
     modalFactory,
     utilsService
 ) {
+    var endpoint = 'me/playlists'
+        , params = 'representation=compact';
 
     $scope.title = 'Shared Playlists';
     $scope.data = '';
     
-    SNapiService.getPlaylists($rootScope.userId)
+    SCapiService.get(endpoint, params)
         .then(function(data) {
-            console.log(data);
-            // TODO - Get SC playlist information
+    
+            SNapiService.getPlaylists()
+                .then(function(snData) {
+                    
+                    $scope.data = data.filter(function(obj) {
+                    
+                        for (var i=0; i<snData.length; i++) {
+                            if (snData[i].playlistId == obj.id) return true;
+                        }
+                        
+                        return false;
+                        
+                    });
+                
+                }, function(error) {
+                    console.log('error', error);
+                });
+                
         }, function(error) {
-            console.log('Unable to load shared playlists - ', error);
+            console.log('error', error);
+        }).finally(function(){
+            $rootScope.isLoading = false;
+            utilsService.setCurrent();
         });
 
     /**
@@ -42,25 +63,6 @@ app.controller('SharedPlaylistsCtrl', function (
                         $('#' + playlistId).remove();
                     });
             });
-    };
-    
-    /** 
-    * Converts a regular playlist into a shared playlist.
-    * @params playlistID [the ID of the playlist to convert]
-    * @method sharePlaylist
-    */
-    $scope.sharePlaylist = function(playlistId) {
-    
-        SNapiService.sharePlaylist($rootScope.userId, playlistId)
-            .then(function(response) {
-                if ( typeof response === 'object' ) {
-                    notificationFactory.success("Playlist shared!");
-                        $('#' + playlistId).remove();
-                }
-            }, function(error) {
-                notificationFactory.error("Something went wrong!");
-            });
-            
     };
     
 });

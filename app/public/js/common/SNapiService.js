@@ -21,10 +21,10 @@ app.service('SNapiService', function (
     * Get all shared playlists for the user
     * @return {promise}
     */
-    this.getPlaylists = function(userId) {
+    this.getPlaylists = function() {
         
         var params = {
-            userId: userId
+            userId: $rootScope.userId
         };
     
         return get('get', { params : params })
@@ -37,10 +37,10 @@ app.service('SNapiService', function (
      * Set playlist as shared
      * @return {promise}
      */
-    this.sharePlaylist = function (userId, playlistId) {
+    this.sharePlaylist = function (playlistId) {
         
         var params = {
-            userId: userId,
+            userId: $rootScope.userId,
             playlistId: playlistId
         };
     
