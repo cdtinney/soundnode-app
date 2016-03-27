@@ -1,0 +1,22 @@
+<div class="playlistUsers">
+    <div ng-include="'views/common/modals/closeButton.html'"></div>
+
+    <header class="playlistUsers_title">
+        <p>Edit Users</p>
+    </header>
+    
+    <!-- add new user -->
+    <form ng-submit="add()">
+        <input type="text" name="new_user" id="newUser" placeholder="Enter username" class="playlistUsers_field" ng-model="newUserName">
+    </form>
+    <!-- add new user /  -->
+
+    <!-- current users -->
+    <ul class="playlistUsers_list">
+        <li class="playlistUsers_list_item" ng-repeat="data in data">
+            <h4>{{ data.userName }}</h4>
+        </li>
+    </ul>
+    <!-- existing playlists /  -->
+    
+</div>

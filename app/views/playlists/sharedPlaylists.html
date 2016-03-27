@@ -24,8 +24,8 @@
                   </span>                  
                   
                   <span class="playlist_item_shared">
-                      <a ng-click="unshare(data.id)"> <i class="fa fa-times"></i> unshare</a>
-                      <a ng-click="editCollaborators(data.id)"> <i class="fa fa-pencil"></i> edit users</a>
+                      <a ng-click="unshare(data.id)"> <i class="fa fa-times"></i> unshare</a>                      
+                      <a data-playlist-id="{{ data.id }}" data-playlist-title="{{ data.title }}" playlist-users> <i class="fa fa-bookmark"></i> edit users</a>
                       <span><i class="fa fa-check"></i> owner</span>
                   </span>
                   

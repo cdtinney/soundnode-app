@@ -24,13 +24,30 @@ app.service('SNapiService', function (
     this.get = function() {
         
         var params = {
-            userId: $rootScope.userId
+            userId: $rootScope.userId,
+            userName: $rootScope.userName,
         };
     
         return get('get', { params : params })
             .then(onResponseSuccess)
             .catch(onResponseError);
     
+    };
+    
+    /**
+    * Get all users for a shared playlist
+    * @return {promise}
+    */
+    this.users = function(playlistId) {
+        
+        var params = {
+            playlistId: playlistId
+        };
+    
+        return get('users', { params : params })
+            .then(onResponseSuccess)
+            .catch(onResponseError);
+            
     };
 
     /**
@@ -41,6 +58,7 @@ app.service('SNapiService', function (
         
         var params = {
             userId: $rootScope.userId,
+            userName: $rootScope.userName,
             playlistId: playlistId
         };
     
@@ -58,6 +76,7 @@ app.service('SNapiService', function (
         
         var params = {
             userId: $rootScope.userId,
+            userName: $rootScope.userName,
             playlistId: playlistId
         };
     

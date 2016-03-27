@@ -9,6 +9,7 @@ app.controller('UserCtrl', function ($rootScope, $scope, $window, SCapiService) 
     SCapiService.get(endpoint, params)
                 .then(function(data) {
                     $rootScope.userId = data.id;
+                    $rootScope.userName = data.username;
                     $scope.data = data;
                 }, function(error) {
                     console.log('error', error);

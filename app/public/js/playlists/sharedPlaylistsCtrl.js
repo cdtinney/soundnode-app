@@ -21,10 +21,16 @@ app.controller('SharedPlaylistsCtrl', function (
             SNapiService.get()
                 .then(function(snData) {
                     
+                    $scope.snData = {};
                     $scope.data = data.filter(function(obj) {
                     
                         for (var i=0; i<snData.length; i++) {
-                            if (snData[i].playlistId == obj.id) return true;
+                        
+                            if (snData[i].playlistId == obj.id) { 
+                                $scope.snData[obj.id] = snData[i];
+                                return true;
+                            }
+                            
                         }
                         
                         return false;

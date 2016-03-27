@@ -1,5 +1,5 @@
 /* 
-* Playlists view
+* Playlist item view
 */
 .playlist_item.playlist {
   display: block;
@@ -60,7 +60,7 @@
 
 }
 
-/* Playlist view
+/* Single playlist view
 *
 */
 .playlistView {
@@ -153,6 +153,44 @@
 
   & .playlistDashboard_selectedSong {
     color: #fff;
+  }
+
+}
+
+/*
+* Shared playlist users - modal
+*/
+.playlistUsers {
+
+  & input {
+    &:hover {
+      cursor: text;
+    }    
+  }
+
+  & img {
+    width: 25px;
+  }
+
+  & h4 {
+    display: inline-block;
+    width: 300px;
+  }
+
+  & .playlistUsers_field {
+    width: 300px;
+  }
+
+  & .playlistUsers_list {
+    margin: 20px 0;
+  }
+  & .playlistUsers_list_item {
+    overflow: hidden;
+    padding: 10px 0;
+
+    &:hover {
+      background: $sectionBackground;
+    }
   }
 
 }
