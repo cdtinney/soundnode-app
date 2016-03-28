@@ -99,10 +99,28 @@ app.service('SNapiService', function (
             playlistId: playlistId
         };
     
-        return post('users/add', { params : params })
+        return post('playlists/users/add', { params : params })
             .then(onResponseSuccess)
             .catch(onResponseError);
             
+    };
+    
+    /**
+    * Removes a user from a playlist
+    * @return {promise}
+    */
+    this.removeUserFromPlaylist = function(userId, playlistId) {
+        
+        var params = {
+            userId: userId,
+            playlistId: playlistId
+        };
+    
+        return httpDelete('playlists/users', { params : params })
+            .then(onResponseSuccess)
+            .catch(onResponseError);
+    
+    
     };
 
     // Private methods
@@ -118,7 +136,7 @@ app.service('SNapiService', function (
     }
     
     /**
-    * Utility method to send an HTTP post request
+    * Utility method to send an HTTP POST request
     * TODO - add params
     */
     function post(resource, config, options) {    
@@ -126,6 +144,17 @@ app.service('SNapiService', function (
         config.method = "POST";
         return sendRequest(resource, config, options);        
     }
+    
+    /**
+    * Utility method to send an HTTP DELETE request
+    * TODO - add params
+    */
+    function httpDelete(resource, config, options) {    
+        config = config || {};
+        config.method = "DELETE";
+        return sendRequest(resource, config, options);        
+    }
+
 
     /**
      * Utility method to send http request

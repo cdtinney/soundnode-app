@@ -6,16 +6,29 @@
     </header>
     
     <!-- add new user -->
-    <input type="text" name="new_user" id="newUser" placeholder="Enter username" class="playlistUsers_field" ng-model="newUserName">
-    <a ng-click="addUser()"> <i class="fa fa-plus"></i> add</a>
+    <span class="playlistUsers_add">
+      
+      <!-- form allows for enter to submit, as well as button -->
+      <form ng-submit="add()">
+        <input type="text" name="new_user" id="newUser" placeholder="Enter username" class="playlistUsers_field" ng-model="newUserName">
+        <span class="playlistUsers_addBtn">
+          <a ng-click="add()"> <i class="fa fa-plus"></i> add</a>
+        </span>
+      </form>
+      
+    </span>
     <!-- add new user /  -->
 
     <!-- current users -->
     <ul class="playlistUsers_list">
-        <li class="playlistUsers_list_item" ng-repeat="data in data">
+        <li class="playlistUsers_list_item" ng-repeat="data in data"
+            id="{{data.userId}}">
             <h4>{{ data.userName }}</h4>
+            <span class="playlistUsers_removeBtn">
+              <a ng-click="remove(data.userId)"> <i class="fa fa-times"></i> remove</a>
+            </span>
         </li>
     </ul>
-    <!-- existing playlists /  -->
+    <!-- current users /  -->
     
 </div>

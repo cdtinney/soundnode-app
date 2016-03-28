@@ -5,47 +5,65 @@ app.controller('PlaylistUsersCtrl', function($rootScope, $scope, SCapiService, S
     $scope.data = '';
 
     SNapiService.users($scope.playlistId)
-        .then(function(data) {
-            $scope.data = data;
+        .then(function(response) {
+            $scope.data = response;
+            
         }, function(error) {
             $log.log('error', error);
+            
         }).finally(function() {
             $rootScope.isLoading = false;
+            
         });
 
     /**
     * Adds a new user to the shared playlist 
-    * @method addUser
+    * @method add
     */
-    $scope.addUser = function() {
+    $scope.add = function() {
         
         SCapiService.getUserByName($scope.newUserName)
             .then(function(data) {
                 
                 SNapiService.addUserToPlaylist(data.id, data.username, $scope.playlistId)
-                    .then(function(response, status) {
+                    .then(function(response) {
                         notificationFactory.success("User added to playlist!");
-                    }, function(response) {
+                        
+                    }, function(error) {
                         notificationFactory.error("Something went wrong!");
-                        $log.log(response);
+                        $log.log(error);
                     })
                     .finally(function() {
                         ngDialog.closeAll();
+                        
                     });
             
             }, function (error) {
                 console.log('error', error);
                 notificationFactory.error("Something went wrong!");
+                
             });
             
     };
-
+    
     /**
-     * Responsible to create a new playlist
-     * and save the selected song
-     * @method createPlaylistAndSaveSong
-     */
-    $scope.createPlaylistAndSaveSong = function() {
+    * Removes a user from the shared playlist
+    * @param [userId] SoundCloud user ID
+    * @method remove
+    */
+    $scope.remove = function(userId) {
+    
+        SNapiService.removeUserFromPlaylist(userId, $scope.playlistId)
+            .then(function(response) {
+                notificationFactory.success("User removed from playlist!");                        
+                $('#' + userId).remove();
+                
+            }, function(error) {
+                notificationFactory.error("Something went wrong!");
+                $log.log(error);
+            
+            });
+    
     };
 
     // Close all open modals

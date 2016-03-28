@@ -162,10 +162,6 @@
 */
 .playlistUsers {
 
-  & .closeModal {
-    margin: 0px !important;
-  }
-
   & input {
     &:hover {
       cursor: text;
@@ -179,6 +175,10 @@
   & h4 {
     display: inline-block;
     width: 300px;
+  }
+
+  & .closeModal {
+    margin: 0px !important;
   }
 
   & .playlistUsers_field {
@@ -195,6 +195,20 @@
     &:hover {
       background: $sectionBackground;
     }
+  }
+  
+  & .playlistUsers_title {
+    margin: 0px 0px 20px 0px;      
+  }
+  
+  & .playlistUsers_addBtn, & .playlistUsers_removeBtn {
+    font-size: 17px;
+    float: right;
+    
+    & :hover {
+      cursor: pointer;
+    }
+    
   }
 
 }
