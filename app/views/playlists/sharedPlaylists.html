@@ -18,15 +18,19 @@
                       <span><i class="fa fa-clock-o"></i> {{ formatSongDuration (data.duration) }}</span>
                   </span>
                   
-                  <span class="playlist_item_controls">
-                      <a ng-click="remove(data.id)"> <i class="fa fa-trash"></i> delete</a>
-                      <a export> <i class="fa fa-floppy-o"></i> export</a>
-                  </span>                  
+                  <span ng-show="data.isOwner" class="playlist_item_owner">
                   
-                  <span class="playlist_item_shared">
-                      <a ng-click="unshare(data.id)"> <i class="fa fa-times"></i> unshare</a>                      
-                      <a data-playlist-id="{{ data.id }}" data-playlist-title="{{ data.title }}" playlist-users> <i class="fa fa-bookmark"></i> edit users</a>
-                      <span><i class="fa fa-check"></i> owner</span>
+                    <span class="playlist_item_controls">
+                        <a ng-click="remove(data.id)"> <i class="fa fa-trash"></i> delete</a>
+                        <a export> <i class="fa fa-floppy-o"></i> export</a>
+                    </span>                  
+                    
+                    <span class="playlist_item_shared">
+                        <a ng-click="unshare(data.id)"> <i class="fa fa-times"></i> unshare</a>           
+                        <a data-playlist-title="{{ data.title }}" playlist-users> <i class="fa fa-bookmark"></i> edit users</a>
+                        <span><i class="fa fa-check"></i> owner</span>
+                    </span>
+                  
                   </span>
                   
                 </div>
