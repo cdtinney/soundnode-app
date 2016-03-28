@@ -303,6 +303,26 @@ app.service('SCapiService', function (
                 return $q.reject(errorResponse);
             });
     };
+    
+    this.getUserByName = function (userName) {
+    
+        var userUrl = "http://soundcloud.com/" + userName;
+        var url = 'https://api.soundcloud.com/resolve?url=' + userUrl + '&client_id=' + $window.scClientId;
+        
+        return $http.get(url)
+            .then(function (response) {
+                if (typeof response.data === 'object') {
+                    return response.data;
+                } else {
+                    //invalid response
+                    return $q.reject(response.data);
+                }
+            }, function (response) {
+                //something went wrong
+                return $q.reject(response.data);
+            });
+        
+    }
 
     /*
      * Soundcloud API is behaving strangely. If "me" is following "id"

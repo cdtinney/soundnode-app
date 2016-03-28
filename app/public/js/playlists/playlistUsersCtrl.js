@@ -1,13 +1,12 @@
 "use strict"
 
-app.controller('PlaylistUsersCtrl', function($rootScope, $scope, SNapiService, $log, $window, $http, ngDialog, notificationFactory) {
+app.controller('PlaylistUsersCtrl', function($rootScope, $scope, SCapiService, SNapiService, $log, $window, $http, ngDialog, notificationFactory) {
 
     $scope.data = '';
 
     SNapiService.users($scope.playlistId)
         .then(function(data) {
             $scope.data = data;
-            console.log(data);
         }, function(error) {
             $log.log('error', error);
         }).finally(function() {
@@ -15,41 +14,30 @@ app.controller('PlaylistUsersCtrl', function($rootScope, $scope, SNapiService, $
         });
 
     /**
-     * Responsible to add track to a particular playlist
-     * @params playlistId [playlist id that contains the track]
-     * @method saveToPlaylist
-     */
-    $scope.saveToPlaylist = function(playlistId) {
-        var endpoint = 'users/'+  $rootScope.userId + '/playlists/'+ playlistId
-            , params = '';
-
-        SCapiService.get(endpoint, params)
-            .then(function(response) {
-                var track = {
-                        "id": Number.parseInt($scope.playlistSongId)
-                    }
-                    , uri = response.uri + '.json?&oauth_token=' + $window.scAccessToken
-                    , tracks = response.tracks;
-
-                tracks.push(track);
-
-                $http.put(uri, { "playlist": {
-                        "tracks": tracks
-                    }
-                }).then(function(response, status) {
-                    notificationFactory.success("Song added to playlist!");
-                }, function(error) {
-                    notificationFactory.error("Something went wrong!");
-                    $log.log(response);
-                    return $q.reject(response.data);
-                }).finally(function() {
-                    ngDialog.closeAll();
-                })
-
-            }, function(error) {
-
+    * Adds a new user to the shared playlist 
+    * @method addUser
+    */
+    $scope.addUser = function() {
+        
+        SCapiService.getUserByName($scope.newUserName)
+            .then(function(data) {
+                
+                SNapiService.addUserToPlaylist(data.id, data.username, $scope.playlistId)
+                    .then(function(response, status) {
+                        notificationFactory.success("User added to playlist!");
+                    }, function(response) {
+                        notificationFactory.error("Something went wrong!");
+                        $log.log(response);
+                    })
+                    .finally(function() {
+                        ngDialog.closeAll();
+                    });
+            
+            }, function (error) {
+                console.log('error', error);
+                notificationFactory.error("Something went wrong!");
             });
-
+            
     };
 
     /**
@@ -58,46 +46,11 @@ app.controller('PlaylistUsersCtrl', function($rootScope, $scope, SNapiService, $
      * @method createPlaylistAndSaveSong
      */
     $scope.createPlaylistAndSaveSong = function() {
-        SCapiService.createPlaylist($scope.playlistName)
-            .then(function(response, status) {
-                $scope.saveToPlaylist(response.id);
-                notificationFactory.success("New playlist created!");
-            }, function(response) {
-                notificationFactory.error("Something went wrong!");
-                $log.log(response);
-            })
-            .finally(function() {
-                ngDialog.closeAll();
-            });
-    };
-
-    // Format song duration on tracks
-    // for human reading
-    $scope.formatSongDuration = function(duration) {
-        var minutes = Math.floor(duration / 60000)
-            , seconds = ((duration % 60000) / 1000).toFixed(0);
-
-        return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     };
 
     // Close all open modals
     $scope.closeModal = function() {
         ngDialog.closeAll();
     };
-
-    /**
-     * Responsible to check if there's a artwork
-     * otherwise replace with default badge
-     * @param thumb [ track artwork ]
-     */
-    $scope.checkForPlaceholder = function (thumb) {
-        var newSize;
-
-        if ( thumb === null ) {
-            return 'public/img/logo-badge.png';
-        } else {
-            newSize = thumb.replace('large', 'badge');
-            return newSize;
-        }
-    }
+    
 });

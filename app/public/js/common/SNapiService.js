@@ -86,6 +86,24 @@ app.service('SNapiService', function (
     
     
     };
+    
+    /** 
+    * Adds a user to a playlist 
+    * @return {promise}
+    */
+    this.addUserToPlaylist = function(userId, userName, playlistId) {
+        
+        var params = {
+            userId: userId,
+            userName: userName,
+            playlistId: playlistId
+        };
+    
+        return post('users/add', { params : params })
+            .then(onResponseSuccess)
+            .catch(onResponseError);
+            
+    };
 
     // Private methods
     

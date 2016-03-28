@@ -2,13 +2,12 @@
     <div ng-include="'views/common/modals/closeButton.html'"></div>
 
     <header class="playlistUsers_title">
-        <p>Edit Users</p>
+        <h3>Edit Users</h3>
     </header>
     
     <!-- add new user -->
-    <form ng-submit="add()">
-        <input type="text" name="new_user" id="newUser" placeholder="Enter username" class="playlistUsers_field" ng-model="newUserName">
-    </form>
+    <input type="text" name="new_user" id="newUser" placeholder="Enter username" class="playlistUsers_field" ng-model="newUserName">
+    <a ng-click="addUser()"> <i class="fa fa-plus"></i> add</a>
     <!-- add new user /  -->
 
     <!-- current users -->

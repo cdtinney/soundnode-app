@@ -162,6 +162,10 @@
 */
 .playlistUsers {
 
+  & .closeModal {
+    margin: 0px !important;
+  }
+
   & input {
     &:hover {
       cursor: text;
