@@ -9,6 +9,18 @@
                 id="{{data.id}}">
 
                 <div>
+                
+                  <span class="playlist_item_sharing">
+                  
+                    <span ng-if="data.sharing == 'public'">
+                      <i class="fa fa-globe"></i>
+                    </span>
+                    <span ng-if="data.sharing == 'private'">
+                      <i class="fa fa-lock"></i>
+                    </span>
+                    
+                  <span>
+                
                   <span class="playlist_item_tit_container">
                     <span ui-sref="playlist({ id: data.id, title: data.title })" class="playlist_item_tit">{{ data.title }}</span>
                   </span>

@@ -70,6 +70,11 @@
 
 }
 
+/* Sharing icon */
+.playlist_item_sharing {
+  font-size: 12px;
+}
+
 /* Single playlist view
 *
 */
@@ -255,6 +260,14 @@
 
   & .playlistDashboard_selectedSong {
     color: #fff;
+  }
+  
+  & .playlist_item_user_type {
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+    font-size: 12px;
+    margin-right: 10px;
   }
 
 }

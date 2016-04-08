@@ -464,6 +464,30 @@ app.service('SCapiService', function (
     };
 
     /**
+     * Responsible to set a playlist to public/private and return the promise
+     * @param playlistId
+     * @returns { request response }
+     */
+    this.setPlaylistSharing = function (playlistId, sharing) {
+        var url = 'https://api.soundcloud.com/users/me' + '/playlists/' + playlistId + '.json?&oauth_token=' + $window.scAccessToken;
+
+        return $http.put(url, {
+            playlist: {sharing: sharing}
+        })
+            .then(function (response) {
+                if (typeof response.data === 'object') {
+                    return response.data;
+                } else {
+                    // invalid response
+                    return $q.reject(response.data);
+                }
+            }, function (response) {
+                // something went wrong
+                return $q.reject(response.data);
+            });
+    };
+
+    /**
      * Get ids of all user reposts
      * @param  {string} next_href - next page of ids, coming from recursive call
      * @return {promise}

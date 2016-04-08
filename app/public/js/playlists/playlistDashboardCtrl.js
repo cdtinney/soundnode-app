@@ -20,7 +20,9 @@ app.controller('PlaylistDashboardCtrl', function($rootScope, $scope, SCapiServic
                             return false;
                         }
                     }            
+                    
                     return true;            
+                
                 });
                 
                 $scope.snData = snData;

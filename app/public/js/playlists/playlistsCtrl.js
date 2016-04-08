@@ -72,15 +72,32 @@ app.controller('PlaylistsCtrl', function (
     */
     $scope.sharePlaylist = function(playlistId) {
     
-        SNapiService.share(playlistId)
-            .then(function(response) {
-                if ( typeof response === 'object' ) {
-                    notificationFactory.success("Playlist shared!");
-                    $('#' + playlistId).remove();
-                }
-            }, function(error) {
-                notificationFactory.error("Something went wrong!");
-            });
+        modalFactory
+            .confirm('Are you sure? Sharing this playlist will automatically set the visibility to public.')
+            .then(function () {
+            
+                SNapiService.share(playlistId)
+                    .then(function(response) {
+                    
+                        if ( typeof response === 'object' ) {
+                        
+                            SCapiService.setPlaylistSharing(playlistId, "public")
+                                .then(function(response) {
+                                    notificationFactory.success("Playlist shared successfully!");
+                                    $('#' + playlistId).remove();
+                                    
+                                }, function(error) {
+                                    notificationFactory.error("Something went wrong!");
+                                    // TODO - call unshare 
+                                    
+                                });
+                        }
+                        
+                    }, function(error) {
+                        notificationFactory.error("Something went wrong!");
+                    });
+            
+        });
             
     };
     

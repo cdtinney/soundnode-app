@@ -35,18 +35,34 @@
       <span>Shared Playlists</span>
       <ul class="playlistDashboard_list">
           <li class="playlistDashboard_list_item" ng-repeat="data in snData" ng-click="saveToSharedPlaylist(data.id, data.isOwner)">
+          
               <div class="mediaBox_wrapper">
                   <img ng-src="{{ checkForPlaceholder(data.artwork_url) }}" alt="{{ data.title }}" class="playlistDashboard_list_item_artwork">
               </div>
+              
               <div class="mediaBox_wrapper">
                   <h4 class="mediaBox_item_title">{{ data.title }}</h4>
+                  
                   <span class="mediaBox_item_info">
                       <i class="fa fa-list"></i> {{ data.track_count }}
                   </span>
+                  
                   <span class="mediaBox_item_info">
                       <i class="fa fa-clock-o"></i> {{ formatSongDuration(data.duration) }}
                   </span>
               </div>
+                  
+              <span class="playlist_item_user_type">
+              
+                <span ng-show="!data.isOwner">
+                    <span><i class="fa fa-check"></i> collaborator</span>
+                </span>
+                <span ng-show="data.isOwner">
+                    <span><i class="fa fa-check"></i> owner</span>
+                </span>
+                
+              </span>
+              
           </li>
       </ul>
       <!-- existing shared playlists / -->
