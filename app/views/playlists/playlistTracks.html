@@ -4,14 +4,43 @@
     <header class="playlistTracks_title">
         <h3>Track Requests</h3>
     </header>
-    
-    <ul class="playlistTracks_list">
-        <li class="playlistTracks_list_item" ng-repeat="data in data"
-            id="{{data.id}}">
-            <span> {{ data.title }} </span>
-            <span class="playlistTracks_controls">
-              <a ng-click="reject(data.id)"> <i class="fa fa-times"></i> reject</a>
+
+    <ul class="songList_item_songs_list">
+        <li class="songList_item_songs_list_item"
+            ng-repeat="data in data"
+            ng-class="{ active: hover }"
+            ng-mouseover="hover = true"
+            ng-mouseleave="hover = false"
+            id="{{track.id}}">
+
+            <!--<div class="songList_item_container_artwork">
+                <span class="songList_item_song_button"
+                      song
+                      data-song-url="{{ data.stream_url }}"
+                      data-song-thumbnail="{{ data.artwork_url }}"
+                      data-song-title="{{ data.title }}"
+                      data-song-user="{{ data.user.username }}"
+                      data-song-user-id="{{ data.user.id }}"
+                      data-song-id="{{ data.id }}"
+                      data-play-list="true" >
+
+                <i class="fa fa-play"></i>
+                <i class="fa fa-pause"></i>
             </span>
+                <img ng-src="{{ checkForPlaceholder(data.artwork_url) }}" alt="{{ data.title }}" class="songList_item_artwork">
+            </div>-->
+
+            <div class="songList_item_container_info">
+                <h2 class="songList_item_song_tit selectable-text">{{ data.title }}</h2>
+                <h4 class="songList_item_song_user">
+                    <span class="songList_item_song_info" ui-sref="profile({id: {{ data.user.id }}})">by: {{ data.user.username }} </span>
+                    <span class="songList_item_song_info">{{ formatSongDuration (data.duration) }}</span>
+                    <span class="playlistTracks_controls">
+                      <a ng-click="reject(data.id)"> <i class="fa fa-times"></i> reject</a>
+                    </span>
+                </h4>
+            </div>
+
         </li>
     </ul>
     
