@@ -13,8 +13,8 @@
             ng-mouseleave="hover = false"
             id="{{track.id}}">
 
-            <!--<div class="songList_item_container_artwork">
-                <span class="songList_item_song_button"
+            <div class="songList_item_container_artwork">
+              <span class="songList_item_song_button"
                       song
                       data-song-url="{{ data.stream_url }}"
                       data-song-thumbnail="{{ data.artwork_url }}"
@@ -26,20 +26,22 @@
 
                 <i class="fa fa-play"></i>
                 <i class="fa fa-pause"></i>
-            </span>
-                <img ng-src="{{ checkForPlaceholder(data.artwork_url) }}" alt="{{ data.title }}" class="songList_item_artwork">
-            </div>-->
+              </span>
+              <img ng-src="{{ checkForPlaceholder(data.artwork_url) }}" alt="{{ data.title }}" class="songList_item_artwork">
+            </div>
 
             <div class="songList_item_container_info">
                 <h2 class="songList_item_song_tit selectable-text">{{ data.title }}</h2>
                 <h4 class="songList_item_song_user">
                     <span class="songList_item_song_info" ui-sref="profile({id: {{ data.user.id }}})">by: {{ data.user.username }} </span>
                     <span class="songList_item_song_info">{{ formatSongDuration (data.duration) }}</span>
-                    <span class="playlistTracks_controls">
-                      <a ng-click="reject(data.id)"> <i class="fa fa-times"></i> reject</a>
-                    </span>
                 </h4>
             </div>
+            
+            <span class="playlistTracks_controls">
+              <a ng-click="approve(data.id)"> <i class="fa fa-thumbs-o-up"></i> approve</a>
+              <a ng-click="reject(data.id)"> <i class="fa fa-thumbs-o-down"></i> reject</a>
+            </span>
 
         </li>
     </ul>

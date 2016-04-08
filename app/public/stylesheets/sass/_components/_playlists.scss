@@ -105,6 +105,93 @@
   
 }
 
+/* Playlist tracks - modal */
+.playlistTracks {
+
+  & .playlistTracks_title {
+    margin: 0 0 20px 0;
+  }
+
+  & .songList_item_songs_list {
+    display: block;
+    width: 100%;
+    margin: 0 0 15px 0;
+
+    & .songList_item_song_button {
+      height: 100%;
+      padding-top: 0;
+      font-size: 32px;
+    }
+
+    & .songList_item_song_user {
+      display: block;
+      margin: 0 0 10px 0;
+      cursor: pointer;
+      width: 100%;
+      float: none;
+
+      & span {
+        cursor: pointer;
+      }
+    }
+
+    & .songList_item_songs_list {
+      margin: 20px 0 0 0;
+    }
+
+    & .songList_item_songs_list_item {
+      cursor: pointer;
+      overflow: hidden;
+      margin: 0 0 5px 0;
+    }
+
+    & .songList_item_container_artwork {
+      width: 47px;
+      height: 47px;
+      float: left;
+      position: relative;
+    }
+
+    & .songList_item_container_info {
+      float: left;
+      margin: 0 0 0 10px;
+    }
+
+    & .songList_item_song_tit {
+      height: auto;
+      max-width: 800px;
+      margin-top: 5px;
+      margin-bottom: 0px;
+    }
+
+    & .songList_item_song_info {
+      display: inline-block;
+      margin: 0 5px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+    
+    & .playlistTracks_controls {
+      display: inline-block;
+      float: right;
+      font-size: 17px;
+      
+      & a {
+        margin: 0 5px 0 5px;
+        &:hover {
+          cursor: pointer;
+        }
+        
+      }
+      
+    }
+
+  }
+
+}
+
 /* 
 * Playlist export - modal 
 */
