@@ -1,0 +1,18 @@
+<div class="playlistTracks">
+    <div ng-include="'views/common/modals/closeButton.html'"></div>
+
+    <header class="playlistTracks_title">
+        <h3>Track Requests</h3>
+    </header>
+    
+    <ul class="playlistTracks_list">
+        <li class="playlistTracks_list_item" ng-repeat="data in data"
+            id="{{data.id}}">
+            <span> {{ data.title }} </span>
+            <span class="playlistTracks_controls">
+              <a ng-click="reject(data.id)"> <i class="fa fa-times"></i> reject</a>
+            </span>
+        </li>
+    </ul>
+    
+</div>

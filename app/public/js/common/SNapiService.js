@@ -35,6 +35,10 @@ app.service('SNapiService', function (
     
     };
     
+    /**
+    * Get all shared playlists for the user, including SoundCloud data for each playlist (tracks, etc)
+    * @return {promise}
+    */
     this.getPlaylistData = function(callback) {
     
         this.get()
@@ -133,6 +137,23 @@ app.service('SNapiService', function (
         return post('unshare', { params : params })
             .then(onResponseSuccess)
             .catch(onResponseError);
+    
+    };
+    
+    /** 
+    * Gets all pending track requests for a playlist
+    * @return {promise}
+    */
+    this.getTrackRequests = function(playlistId) {
+        
+        var params = {
+            userId: $rootScope.userId,
+            playlistId: playlistId
+        };
+    
+        return get('playlists/tracks', { params : params })
+            .then(onResponseSuccess)
+            .catch(onResponseError);  
     
     };
     

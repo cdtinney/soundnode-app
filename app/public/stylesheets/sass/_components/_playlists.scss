@@ -22,8 +22,8 @@
   
   & .playlist_item_info {
     display: inline-block;
-    width: 300px;
     font-size: 12px;  
+    width: 200px;
     & .fa {
       cursor: default;
     }
@@ -35,7 +35,7 @@
   & .playlist_item_controls, & .playlist_item_shared {
     display: inline-block;
     font-size: 12px;    
-    width: 300px;
+    width: 200px;
     & a {
       margin-right: 4px;
       &:hover {
@@ -45,6 +45,16 @@
     & span {
       margin-right: 10px;
     }
+  }
+  
+  & .playlist_item_shared {
+    width: auto;
+    margin-right: 20px;
+  }
+  
+  & .playlist_item_user_type {
+    float: right;
+    font-size: 12px;    
   }
 
 }
