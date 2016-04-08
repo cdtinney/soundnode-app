@@ -14,55 +14,9 @@ app.controller('SharedPlaylistsCtrl', function (
     $scope.title = 'Shared Playlists';
     $scope.data = '';
     
-    $scope.fetchPlaylists = function() {
-    
-        /* Get shared playlist info from SoundNode servers */
-        SNapiService.get()
-            .then(function(snData) {
-                    
-                var defer = $q.defer();
-                var promises = [];
-                
-                /* Fetch all of the playlist information/tracks from SC */
-                var endpoint = "playlists";                    
-                angular.forEach(snData, function(playlist) {
-                    promises.push(SCapiService.getPublicPlaylist(playlist.playlistId));
-                });
-                
-                $q.all(promises).then(function(data) {
-                
-                    $scope.data = data.filter(function(obj) {
-                    
-                        /* Add the isOwner attribute to each playlist */
-                        for (var i=0; i<snData.length; i++) {
-                        
-                            if (snData[i].playlistId == obj.id) { 
-                                obj.isOwner = snData[i].isOwner;
-                                return true;
-                            }
-                            
-                        }
-                        
-                        return false;
-                        
-                    });
-                    
-                }, function(error) {
-                    console.log('error', error);                    
-                });
-            
-            }, function(error) {
-                console.log('error', error);
-            })
-            .finally(function() {
-                $rootScope.isLoading = false;
-                utilsService.setCurrent();            
-            });
-    
-    };
-    
-    /* Initial query */
-    $scope.fetchPlaylists();
+    SNapiService.getPlaylistData(function(data) {
+        $scope.data = data;
+    });
 
     /**
      * Delete entire playlist.

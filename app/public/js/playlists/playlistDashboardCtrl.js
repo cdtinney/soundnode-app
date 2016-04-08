@@ -1,14 +1,32 @@
 "use strict"
 
-app.controller('PlaylistDashboardCtrl', function($rootScope, $scope, SCapiService, $log, $window, $http, ngDialog, notificationFactory) {
+app.controller('PlaylistDashboardCtrl', function($rootScope, $scope, SCapiService, SNapiService, $log, $window, $http, ngDialog, notificationFactory) {
     var endpoint = 'me/playlists'
         , params = '';
 
     $scope.data = '';
+    $scope.snData = '';
 
     SCapiService.get(endpoint, params)
         .then(function(data) {
             $scope.data = data;
+        
+            SNapiService.getPlaylistData(function(snData) {
+            
+                /* Remove shared playlists from regular playlist array */
+                $scope.data = data.filter(function(obj) {
+                    for (var i=0; i<snData.length; i++) {
+                        if (snData[i].id == obj.id) { 
+                            return false;
+                        }
+                    }            
+                    return true;            
+                });
+                
+                $scope.snData = snData;
+                
+            });
+            
         }, function(error) {
             $log.log('error', error);
         }).finally(function() {
@@ -48,7 +66,7 @@ app.controller('PlaylistDashboardCtrl', function($rootScope, $scope, SCapiServic
                 })
 
             }, function(error) {
-
+                notificationFactory.error("Something went wrong!");
             });
 
     };
@@ -70,6 +88,25 @@ app.controller('PlaylistDashboardCtrl', function($rootScope, $scope, SCapiServic
             .finally(function() {
                 ngDialog.closeAll();
             });
+    };
+    
+    $scope.saveToSharedPlaylist = function(playlistId, isOwner) {
+    
+        if (isOwner) {
+            $scope.saveToPlaylist(playlistId);
+        
+        } else {
+            
+            var trackId = Number.parseInt($scope.playlistSongId);
+            SNapiService.addTrackToPlaylist(playlistId, trackId)
+                .then(function(data) {
+                
+                }, function(error) {
+                    notificationFactory.error("Something went wrong!");
+                });
+        
+        }
+    
     };
 
     // Format song duration on tracks
