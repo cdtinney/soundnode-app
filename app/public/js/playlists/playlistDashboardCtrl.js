@@ -100,9 +100,12 @@ app.controller('PlaylistDashboardCtrl', function($rootScope, $scope, SCapiServic
             var trackId = Number.parseInt($scope.playlistSongId);
             SNapiService.addTrackToPlaylist(playlistId, trackId)
                 .then(function(data) {
-                
+                    notificationFactory.success("Track request created for shared playlist!");
                 }, function(error) {
                     notificationFactory.error("Something went wrong!");
+                })
+                .finally(function() {
+                    ngDialog.closeAll();
                 });
         
         }
