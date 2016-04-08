@@ -10,9 +10,12 @@
       </span>
       
       <span class="playlist_item_controls">
-          <a ng-click="removePlaylist(data.id)"> <i class="fa fa-trash"></i> delete</a>
+          <span ng-if="isOwner == 'true'">
+            <a ng-click="removePlaylist(data.id)"> <i class="fa fa-trash"></i> delete</a>
+          </span>          
           <a export> <i class="fa fa-floppy-o"></i> export</a>
       </span>                  
+      
     </div>
 
     <!-- Song list wrapper -->

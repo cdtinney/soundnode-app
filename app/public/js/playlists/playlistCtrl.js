@@ -20,6 +20,7 @@ app.controller('PlaylistCtrl', function (
     
     $scope.title = 'Playlist' + (playlistTitle !== null ? (' - ' + playlistTitle) : '');
     $scope.data = '';
+    $scope.isOwner = $stateParams.isOwner;
     
     SCapiService.get('me/playlists/' + playlistId)
         .then(function(data) {
