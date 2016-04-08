@@ -158,6 +158,41 @@ app.service('SNapiService', function (
     };
     
     /** 
+    * Accepts a track request made by a user
+    * @return {promise}
+    */
+    this.acceptTrackRequest = function(trackId, playlistId) {
+        return changeTrackRequestStatus(trackId, playlistId, "accept");
+    };
+    
+    /** 
+    * Rejects a track request made by a user
+    * @return {promise}
+    */
+    this.rejectTrackRequest = function(trackId, playlistId) {
+        return changeTrackRequestStatus(trackId, playlistId, "reject");
+    };
+    
+    /** 
+    * Updates the status of a track request
+    * @return {promise}
+    */
+    function changeTrackRequestStatus(trackId, playlistId, status) {
+    
+        var params = {
+            userId: $rootScope.userId,
+            trackId: trackId,
+            playlistId: playlistId,
+            status: status
+        };
+        
+        return post('playlists/tracks/status', { params : params })
+            .then(onResponseSuccess)
+            .catch(onResponseError);  
+    
+    };
+    
+    /** 
     * Adds a track to a playlist not owned by the user
     * @return {promise}
     */

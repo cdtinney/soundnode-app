@@ -28,6 +28,100 @@ app.controller('PlaylistTracksCtrl', function($rootScope, $scope, SCapiService, 
             });
             
     }
+    
+    $scope.approve = function(trackId) {
+    
+        SNapiService.acceptTrackRequest(trackId, $scope.playlistId)
+            .then(function(data) {
+            
+                if (data == "1") {
+                
+                    // Add to the actual SoundCloud playlist
+                    // TODO - If this returns an error, there will be an inconsistency between our DB and the SC playlist
+                    // (need to revert track request status back to pending, if this occurs)
+                    $scope.saveToPlaylist(trackId, $scope.playlistId);                    
+                    
+                } else {
+                    notificationFactory.error("Something went wrong!");
+                    $log.log(data);                
+                }
+            
+            }, function(error) {
+                console.log("error " + error);
+            
+            })
+            .finally(function() {
+                ngDialog.closeAll();
+                
+            });
+    
+    }
+    
+    $scope.reject = function(trackId) {
+    
+        SNapiService.rejectTrackRequest(trackId, $scope.playlistId)
+            .then(function(data) {
+            
+                if (data  == "1") {
+                    notificationFactory.success("Successfully rejected track!");
+                    
+                } else {
+                    notificationFactory.error("Something went wrong!");
+                    $log.log(data);
+                
+                }
+            
+            }, function(error) {
+                notificationFactory.error("Something went wrong!");
+                console.log("error " + error);
+            
+            })
+            .finally(function() {
+                ngDialog.closeAll();
+                
+            });
+            
+    }
+    
+    /**
+     * TODO - This is duplicated across playlistTracksCtrl.js and playlistDashboardCtrl.js
+     *
+     * Responsible to add track to a particular playlist
+     * @params playlistId [playlist id that contains the track]
+     * @method saveToPlaylist
+     */
+    $scope.saveToPlaylist = function(trackId, playlistId) {
+        var endpoint = 'users/'+  $rootScope.userId + '/playlists/'+ playlistId
+            , params = '';
+
+        SCapiService.get(endpoint, params)
+            .then(function(response) {
+                var track = {
+                        "id": Number.parseInt(trackId)
+                    }
+                    , uri = response.uri + '.json?&oauth_token=' + $window.scAccessToken
+                    , tracks = response.tracks;
+
+                tracks.push(track);
+
+                $http.put(uri, { "playlist": {
+                        "tracks": tracks
+                    }
+                }).then(function(response, status) {
+                    notificationFactory.success("Song added to playlist!");
+                }, function(error) {
+                    notificationFactory.error("Something went wrong!");
+                    $log.log(response);
+                    return $q.reject(response.data);
+                }).finally(function() {
+                    ngDialog.closeAll();
+                })
+
+            }, function(error) {
+                notificationFactory.error("Something went wrong!");
+            });
+
+    };
 
     /**
      * TODO - Move to common 
