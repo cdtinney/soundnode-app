@@ -210,6 +210,11 @@
 */
 .playlistDashboard {
 
+  & .playlistDashboard_list_container {
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+
   & input {
     &:hover {
       cursor: text;
