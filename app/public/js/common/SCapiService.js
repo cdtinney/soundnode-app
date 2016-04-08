@@ -348,6 +348,28 @@ app.service('SCapiService', function (
     };
 
     /**
+     * Responsible to get a public playlist (not created by the user)
+     * @param playlistId
+     * @returns { request response }
+     */
+    this.getPublicPlaylist = function (id) {
+        var url = 'https://api.soundcloud.com/' + 'playlists/' + id + '.json?&oauth_token=' + $window.scAccessToken;
+
+        return $http.get(url)
+            .then(function (response) {
+                if (typeof response.data === 'object') {
+                    return response.data;
+                } else {
+                    // invalid response
+                    return $q.reject(response.data);
+                }
+            }, function (response) {
+                // something went wrong
+                return $q.reject(response.data);
+            });
+    };
+
+    /**
      * Responsible to get a playlist 
      * @param playlistId
      * @returns { request response }

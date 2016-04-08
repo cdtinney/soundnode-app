@@ -2,27 +2,38 @@
 
 app.controller('SharedPlaylistsCtrl', function (
     $scope,
+    $rootScope,
+    $q,
     SCapiService,
     SNapiService,
-    $rootScope,
     notificationFactory,
     modalFactory,
     utilsService
 ) {
-    var endpoint = 'me/playlists'
-        , params = 'representation=compact';
 
     $scope.title = 'Shared Playlists';
     $scope.data = '';
     
-    SCapiService.get(endpoint, params)
-        .then(function(data) {
+    $scope.fetchPlaylists = function() {
     
-            SNapiService.get()
-                .then(function(snData) {
+        /* Get shared playlist info from SoundNode servers */
+        SNapiService.get()
+            .then(function(snData) {
                     
+                var defer = $q.defer();
+                var promises = [];
+                
+                /* Fetch all of the playlist information/tracks from SC */
+                var endpoint = "playlists";                    
+                angular.forEach(snData, function(playlist) {
+                    promises.push(SCapiService.getPublicPlaylist(playlist.playlistId));
+                });
+                
+                $q.all(promises).then(function(data) {
+                
                     $scope.data = data.filter(function(obj) {
                     
+                        /* Add the isOwner attribute to each playlist */
                         for (var i=0; i<snData.length; i++) {
                         
                             if (snData[i].playlistId == obj.id) { 
@@ -35,17 +46,23 @@ app.controller('SharedPlaylistsCtrl', function (
                         return false;
                         
                     });
-                
+                    
                 }, function(error) {
-                    console.log('error', error);
+                    console.log('error', error);                    
                 });
-                
-        }, function(error) {
-            console.log('error', error);
-        }).finally(function(){
-            $rootScope.isLoading = false;
-            utilsService.setCurrent();
-        });
+            
+            }, function(error) {
+                console.log('error', error);
+            })
+            .finally(function() {
+                $rootScope.isLoading = false;
+                utilsService.setCurrent();            
+            });
+    
+    };
+    
+    /* Initial query */
+    $scope.fetchPlaylists();
 
     /**
      * Delete entire playlist.
