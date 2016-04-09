@@ -193,10 +193,10 @@ app.service('SNapiService', function (
     };
     
     /** 
-    * Adds a track to a playlist not owned by the user
+    * Adds a track to a playlist not owned by the user, via a request.
     * @return {promise}
     */
-    this.addTrackToPlaylist = function(playlistId, trackId) {
+    this.addTrackToPlaylist = function(trackId, playlistId) {
     
         var params = {
             userId: $rootScope.userId,
@@ -205,6 +205,24 @@ app.service('SNapiService', function (
         };
         
         return post('playlists/tracks/add', { params : params })
+            .then(onResponseSuccess)
+            .catch(onResponseError);  
+            
+    };
+    
+    /** 
+    * Removes a track to a playlist not owned by the user, via a request.
+    * @return {promise}
+    */
+    this.removeTrackFromPlaylist = function(trackId, playlistId) {
+    
+        var params = {
+            userId: $rootScope.userId,
+            trackId: trackId,
+            playlistId: playlistId
+        };
+        
+        return post('playlists/tracks/remove', { params : params })
             .then(onResponseSuccess)
             .catch(onResponseError);  
             

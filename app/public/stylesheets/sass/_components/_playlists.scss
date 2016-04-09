@@ -24,27 +24,35 @@
     display: inline-block;
     font-size: 12px;  
     width: 200px;
+    
     & .fa {
       cursor: default;
     }
+    
     & span {
       margin-right: 10px;
     }
+    
   }
   
   & .playlist_item_controls, & .playlist_item_shared {
     display: inline-block;
     font-size: 12px;    
     width: 200px;
+    
     & a {
       margin-right: 4px;
+      
       &:hover {
         cursor: pointer;
       }    
+      
     }    
+    
     & span {
       margin-right: 10px;
     }
+    
   }
   
   & .playlist_item_shared {
@@ -98,12 +106,16 @@
     & .playlist_item_controls {
       display: inline-block;
       float: right;
+      
       & a {
         margin: 0 0 0 20px;
+        
         &:hover {
           cursor: pointer;
         }    
+        
       }    
+      
     }
     
   }
@@ -128,9 +140,8 @@
       font-size: 32px;
     }
 
-    & .songList_item_song_user {
+    & .songList_item_song_user, & .songList_item_request_info {
       display: block;
-      margin: 0 0 10px 0;
       cursor: pointer;
       width: 100%;
       float: none;
@@ -138,6 +149,16 @@
       & span {
         cursor: pointer;
       }
+      
+    }
+    
+    & .songList_item_request_info {
+      cursor: default;
+      
+      & span {
+        cursor: default;
+      }
+      
     }
 
     & .songList_item_songs_list {
@@ -164,7 +185,7 @@
 
     & .songList_item_song_tit {
       height: auto;
-      max-width: 500px;
+      max-width: 450px;
       margin-top: 5px;
       margin-bottom: 0px;
     }
@@ -176,15 +197,17 @@
       &:first-child {
         margin-left: 0;
       }
+      
     }
     
     & .playlistTracks_controls {
       display: inline-block;
       float: right;
-      font-size: 17px;
+      font-size: 15px;
       
       & a {
         margin: 0 5px 0 5px;
+        
         &:hover {
           cursor: pointer;
         }

@@ -36,11 +36,15 @@
                     <span class="songList_item_song_info" ui-sref="profile({id: {{ data.user.id }}})">by: {{ data.user.username }} </span>
                     <span class="songList_item_song_info">{{ formatSongDuration (data.duration) }}</span>
                 </h4>
+                <h4 class="songList_item_request_info">
+                    <span class="songList_item_song_info playlistTracks_request_type">request type: {{ data.requestType }} </span>
+                    <span class="songList_item_song_info playlistTracks_request_user">request by: {{ data.userId }} </span>
+                </h4>
             </div>
             
             <span class="playlistTracks_controls">
-              <a ng-click="approve(data.id)"> <i class="fa fa-thumbs-o-up"></i> approve</a>
-              <a ng-click="reject(data.id)"> <i class="fa fa-thumbs-o-down"></i> reject</a>
+              <a ng-click="approve(data.id, data.requestType)"> <i class="fa fa-thumbs-o-up"></i> approve</a>
+              <a ng-click="reject(data.id, data.requestType)"> <i class="fa fa-thumbs-o-down"></i> reject</a>
             </span>
 
         </li>

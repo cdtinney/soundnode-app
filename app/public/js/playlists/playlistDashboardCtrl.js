@@ -100,7 +100,7 @@ app.controller('PlaylistDashboardCtrl', function($rootScope, $scope, SCapiServic
         } else {
             
             var trackId = Number.parseInt($scope.playlistSongId);
-            SNapiService.addTrackToPlaylist(playlistId, trackId)
+            SNapiService.addTrackToPlaylist(trackId, playlistId)
                 .then(function(data) {
                     notificationFactory.success("Track request created for shared playlist!");
                 }, function(error) {

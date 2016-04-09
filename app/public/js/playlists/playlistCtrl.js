@@ -2,7 +2,6 @@
 
 app.controller('PlaylistCtrl', function (
     $scope,
-    SCapiService,
     $rootScope,
     $log,
     $window,
@@ -12,7 +11,9 @@ app.controller('PlaylistCtrl', function (
     notificationFactory,
     modalFactory,
     utilsService,
-    queueService
+    queueService,
+    SCapiService,
+    SNapiService
 ) {    
 
     var playlistId = $stateParams.id;
@@ -41,10 +42,10 @@ app.controller('PlaylistCtrl', function (
 
     /**
      * Responsible to remove track from a particular playlist
-     * @params songId [track id to be removed from the playlist]
+     * @params trackId [track id to be removed from the playlist]
      * @method removeFromPlaylist
      */
-    $scope.removeFromPlaylist = function(songId) {
+    $scope.removeFromPlaylist = function(trackId) {
     
         var endpoint = 'users/'+  $rootScope.userId + '/playlists/'+ playlistId
             , params = '';
@@ -58,7 +59,7 @@ app.controller('PlaylistCtrl', function (
 
                 // finding the track index
                 for ( ; i < tracks.length ; i++ ) {
-                    if ( songId == tracks[i].id ) {
+                    if ( trackId == tracks[i].id ) {
                         songIndex = i;
                     }
                 }
@@ -79,9 +80,9 @@ app.controller('PlaylistCtrl', function (
                     
                 }).finally(function() {
 
-                    $('#' + songId).remove();
+                    $('#' + trackId).remove();
 
-                    var inQueue = queueService.find(songId);
+                    var inQueue = queueService.find(trackId);
                     if ( inQueue ) {
                         queueService.remove(inQueue);
                     }
@@ -96,15 +97,24 @@ app.controller('PlaylistCtrl', function (
 
     };
     
-    $scope.removeTrack = function(trackId) {
-    
-        if ($scope.isOwner === "true") {
-            $scope.removeFromPlaylist(trackId);
+    /**
+     * Responsible to remove track from a particular shared playlist that the user does not own. 
+     *  A track remove request is sent to the Soundnode server. 
+     * @params trackId [track id to be removed from the playlist]
+     * @method removeFromPlaylist
+     */
+    $scope.removeTrackRequest = function(trackId) {
+        
+        SNapiService.removeTrackFromPlaylist(trackId, playlistId)
+            .then(function(data) {
+                notificationFactory.success("Successfully created remove request!");
+                /* TODO - display 'pending' on remove control, so user doesn't hit it multiple times */
             
-        } else {
-            // TODO - remove request
+            }, function(err) {
+                notificationFactory.error("Something went wrong!");
+                $log.log(response);
             
-        }
+            });
     
     };
     
