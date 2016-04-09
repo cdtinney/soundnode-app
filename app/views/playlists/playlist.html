@@ -1,5 +1,8 @@
 <div class="playlistView">
-    <h1> {{ title }} </h1>
+    <h1> 
+      <span ng-if="shared">Shared</span>
+      {{ title }} 
+    </h1>
     
     <!-- TODO - filter, sort (model after stream) -->
                 
@@ -7,14 +10,7 @@
       <span class="playlist_item_info">
           <span><i class="fa fa-list"></i> {{ data.track_count }} </span>
           <span><i class="fa fa-clock-o"></i> {{ formatSongDuration (data.duration) }}</span>
-      </span>
-      
-      <span class="playlist_item_controls">
-          <span ng-if="isOwner == 'true'">
-            <a ng-click="removePlaylist(data.id)"> <i class="fa fa-trash"></i> delete</a>
-          </span>          
-          <a export> <i class="fa fa-floppy-o"></i> export</a>
-      </span>                  
+      </span>              
       
     </div>
 
@@ -26,8 +22,19 @@
             infinite-scroll-container='".mainView"'
             infinite-scroll-immediate-check='false' >
 
-            <li class="songList_item" ng-repeat="track in data.tracks" ng-if="track.kind == 'track' && track.streamable" >
+            <li class="songList_item" ng-repeat="track in data.tracks" ng-if="track.kind == 'track' && track.streamable" id="{{ track.id }}" >
+            
                 <tracks data="track"/>
+                
+                <span ng-if="shared" class="songList_item_shared_controls">
+                  
+                  <a ng-click="removeTrack(track.id)">
+                    <i class="fa fa-trash-o"></i> 
+                    remove
+                  </a>
+                  
+                </span>                
+                
             </li>
             
         </ul>

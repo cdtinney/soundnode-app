@@ -21,6 +21,7 @@ app.controller('PlaylistCtrl', function (
     $scope.title = 'Playlist' + (playlistTitle !== null ? (' - ' + playlistTitle) : '');
     $scope.data = '';
     $scope.isOwner = $stateParams.isOwner;
+    $scope.shared = $stateParams.shared;
     
     SCapiService.get('me/playlists/' + playlistId)
         .then(function(data) {
@@ -40,11 +41,11 @@ app.controller('PlaylistCtrl', function (
 
     /**
      * Responsible to remove track from a particular playlist
-     * @params songId [track id to be removed from the playlist
-     * @params playlistId [playlist id that contains the track]
+     * @params songId [track id to be removed from the playlist]
      * @method removeFromPlaylist
      */
-    $scope.removeFromPlaylist = function(songId, playlistId) {
+    $scope.removeFromPlaylist = function(songId) {
+    
         var endpoint = 'users/'+  $rootScope.userId + '/playlists/'+ playlistId
             , params = '';
 
@@ -69,19 +70,24 @@ app.controller('PlaylistCtrl', function (
                     "tracks": tracks
                 }
                 }).then(function(response) {
-                    notificationFactory.success("Song removed from Playlist!");
+                    notificationFactory.success("Song removed from playlist!");
+                    
                 }, function(response) {
                     notificationFactory.error("Something went wrong!");
                     $log.log(response);
                     return $q.reject(response.data);
+                    
                 }).finally(function() {
-                    var inQueue = queueService.find(songId);
 
                     $('#' + songId).remove();
 
+                    var inQueue = queueService.find(songId);
                     if ( inQueue ) {
                         queueService.remove(inQueue);
                     }
+                    
+                    $rootScope.isLoading = false;
+                    
                 })
 
             }, function(error) {
@@ -89,28 +95,17 @@ app.controller('PlaylistCtrl', function (
             });
 
     };
-
-    /**
-     * Responsible to delete entire playlist
-     * @params playlistId [playlist id]
-     * @method removePlaylist
-     */
-    $scope.removePlaylist = function(playlistId) {
-        modalFactory
-            .confirm('Do you really want to delete the playlist?')
-            .then(function () {
-                SCapiService.removePlaylist(playlistId)
-                    .then(function(response) {
-                        if ( typeof response === 'object' ) {
-                            notificationFactory.success("Playlist removed!");
-                        }
-                    }, function(error) {
-                        notificationFactory.error("Something went wrong!");
-                    })
-                    .finally(function() {
-                        $('#' + playlistId).remove();
-                    });
-            });
+    
+    $scope.removeTrack = function(trackId) {
+    
+        if ($scope.isOwner === "true") {
+            $scope.removeFromPlaylist(trackId);
+            
+        } else {
+            // TODO - remove request
+            
+        }
+    
     };
     
 });

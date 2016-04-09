@@ -230,6 +230,15 @@ div.active {
     }
 }
 
+.songList_item_shared_controls {
+  display: inline-block;
+  float: right;
+  font-size: 12px;
+  & a:hover {
+    cursor: pointer;
+  }
+}
+
 @-webkit-keyframes heartBeat {
   0%   {
     font-size: 12px;

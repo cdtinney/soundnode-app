@@ -51,7 +51,7 @@ app.controller('SharedPlaylistsCtrl', function (
     $scope.unshare = function(playlistId) {
     
         modalFactory
-            .confirm('Are you sure you want to unshare this playlist? Collaborators will no longer be able to access it, and the visibility will be set to private.')
+            .confirm('Are you sure you want to unshare this playlist? Collaborators will no longer be able to access it, and the visibility will be set to private. Any pending track requests will be lost.')
             .then(function () {
                 SNapiService.unshare(playlistId)
                     .then(function(response) {

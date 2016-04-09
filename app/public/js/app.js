@@ -52,7 +52,7 @@ app.config(function (
             controller: 'PlaylistsCtrl'
         })
         .state('playlist', {
-            url: '/playlist/:id?title&isOwner',
+            url: '/playlist/:id?title&shared&isOwner',
             templateUrl: 'views/playlists/playlist.html',
             controller: 'PlaylistCtrl'
         })
