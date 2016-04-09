@@ -9,6 +9,8 @@ app.directive('filterTracks', function (
             return "views/common/filter-tracks.html";
         },
         link : function (scope, element, attrs) {
+        
+            var isPlaylist = attrs.isPlaylist || false;
 
             /**
              * Filter and return an new array of tracks
@@ -30,8 +32,8 @@ app.directive('filterTracks', function (
              */
             function filterByUserReposts(obj) {
                 var userReposted = (obj.track !== undefined) ? obj.track.user_reposted : obj.user_reposted;
-
-                return userReposted === false;
+                
+                return userReposted === undefined || userReposted === false;
             }
 
             /**
@@ -69,11 +71,16 @@ app.directive('filterTracks', function (
             }
 
             /**
-             * Filter tracks by time ( higher than 30 mins )
-             * by reposted and by listens ( higher than 10k listens )
+             * Filter tracks - stream 
              */
             scope.filter = function() {
+            
+                if (isPlaylist == "true") {
+                    scope.filterPlaylist();
+                    return;
+                }
 
+                /* Reset the track data (when a filter is deselected) */
                 scope.data = scope.originalData;
 
                 if ( scope.length ) {
@@ -98,6 +105,39 @@ app.directive('filterTracks', function (
 
                 utilsService.setCurrent();
 
+            };
+            
+            /**
+             * Filter tracks - playlist
+             */
+            scope.filterPlaylist = function() {
+            
+                /* Reset the track data (when a filter is deselected) */
+                scope.tracks = scope.data.tracks;
+
+                if ( scope.length ) {
+                    scope.tracks = scope.data.tracks.filter(filterByLength);
+                }
+
+                if ( scope.user_reposts ) {
+                    scope.tracks = scope.data.tracks.filter(filterByUserReposts);
+                }
+
+                if ( scope.all_reposts ) {
+                    scope.tracks = scope.data.tracks.filter(filterByAllReposts);
+                }
+
+                if ( scope.listens ) {
+                    scope.tracks = scope.data.tracks.filter(filterByListens);
+                }
+                
+                if ( scope.downloads ) {
+                    scope.tracks = scope.data.tracks.filter(filterByDownloads);
+                }
+
+                utilsService.setCurrent();
+            
+            
             };
 
         }

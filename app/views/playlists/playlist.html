@@ -5,6 +5,7 @@
     </h1>
     
     <!-- TODO - filter, sort (model after stream) -->
+    <filter-tracks data-is-playlist="true" class="filterTracks" ></filter-tracks>
                 
     <div class="playlistView_info">
       <span class="playlist_item_info">
@@ -22,7 +23,7 @@
             infinite-scroll-container='".mainView"'
             infinite-scroll-immediate-check='false' >
 
-            <li class="songList_item" ng-repeat="track in data.tracks" ng-if="track.kind == 'track' && track.streamable" id="{{ track.id }}" >
+            <li class="songList_item" ng-repeat="track in tracks" ng-if="track.kind == 'track' && track.streamable" id="{{ track.id }}" >
             
                 <tracks data="track"/>
                 

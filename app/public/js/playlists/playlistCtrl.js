@@ -21,6 +21,7 @@ app.controller('PlaylistCtrl', function (
     
     $scope.title = 'Playlist' + (playlistTitle !== null ? (' - ' + playlistTitle) : '');
     $scope.data = '';
+    $scope.tracks = '';
     $scope.isOwner = $stateParams.isOwner;
     $scope.shared = $stateParams.shared;
     
@@ -33,6 +34,7 @@ app.controller('PlaylistCtrl', function (
                 }
             }
             $scope.data = data;
+            $scope.tracks = data.tracks;
         }, function(error) {
             console.log('error', error);
         }).finally(function(){
