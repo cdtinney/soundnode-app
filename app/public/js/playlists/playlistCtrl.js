@@ -24,6 +24,7 @@ app.controller('PlaylistCtrl', function (
     $scope.tracks = '';
     $scope.isOwner = $stateParams.isOwner;
     $scope.shared = $stateParams.shared;
+    $scope.isPlaylist = true;
     
     SCapiService.get('me/playlists/' + playlistId)
         .then(function(data) {
@@ -35,6 +36,8 @@ app.controller('PlaylistCtrl', function (
             }
             $scope.data = data;
             $scope.tracks = data.tracks;
+            utilsService.updateTracksLikes(data.tracks, true);
+            utilsService.updateTracksReposts(data.tracks, true);
         }, function(error) {
             console.log('error', error);
         }).finally(function(){

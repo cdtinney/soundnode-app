@@ -10,13 +10,17 @@ app.directive('sortTracks', function (
         },
         link : function (scope, element, attrs) {
         
+            var isPlaylist = attrs.isPlaylist;
+        
             scope.sort = function() {
 
-                scope.data = scope.originalData;
-
-                /*if ( scope.length ) {
-                    scope.data = scope.data.filter(filterByLength);
-                }*/
+                if (isPlaylist == "true") {
+                    scope.tracks = scope.data.tracks;
+                    
+                } else {
+                    scope.data = scope.originalData;
+                
+                }
 
                 utilsService.setCurrent();
 
