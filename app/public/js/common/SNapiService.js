@@ -174,7 +174,7 @@ app.service('SNapiService', function (
     };
     
     /** 
-    * Updates the status of a track request
+    * Updates the status of a track request (pending/accept/reject).
     * @return {promise}
     */
     function changeTrackRequestStatus(trackId, playlistId, status) {
@@ -190,6 +190,42 @@ app.service('SNapiService', function (
             .then(onResponseSuccess)
             .catch(onResponseError);  
     
+    };
+    
+    /** 
+    * Gets all tracks listened by the user within a specific playlist
+    * @return {promise}
+    */
+    this.getTracksListened = function(playlistId) {
+    
+        var params = {
+            userId: $rootScope.userId,
+            playlistId: playlistId
+        };
+        
+        return get('playlists/tracks/listen', { params : params })
+            .then(onResponseSuccess)
+            .catch(onResponseError);  
+            
+    };
+    
+    /** 
+    * Sets a track's listened status.
+    * @return {promise}
+    */
+    this.setTrackListened = function(trackId, playlistId, listened) {
+    
+        var params = {
+            userId: $rootScope.userId,
+            trackId: trackId,
+            playlistId: playlistId,
+            listened: listened
+        };
+        
+        return post('playlists/tracks/listen', { params : params })
+            .then(onResponseSuccess)
+            .catch(onResponseError);  
+            
     };
     
     /** 

@@ -16,34 +16,87 @@ app.controller('PlaylistCtrl', function (
     SNapiService
 ) {    
 
-    var playlistId = $stateParams.id;
-    var playlistTitle = $stateParams.title;
+    $scope.playlistId = $stateParams.id;
+    $scope.playlistTitle = $stateParams.title;
     
-    $scope.title = 'Playlist' + (playlistTitle !== null ? (' - ' + playlistTitle) : '');
+    $scope.title = 'Playlist' + ($scope.playlistTitle !== null ? (' - ' + $scope.playlistTitle) : '');
     $scope.data = '';
     $scope.tracks = '';
     $scope.isOwner = $stateParams.isOwner;
     $scope.shared = $stateParams.shared;
     $scope.isPlaylist = true;
     
-    SCapiService.get('me/playlists/' + playlistId)
+    SCapiService.get('me/playlists/' + $scope.playlistId)
         .then(function(data) {
+        
             var l = data.tracks.length;
             while(l--) {
                 if(!data.tracks[l].streamable) {
                     data.tracks.splice(l, 1);
                 }
             }
-            $scope.data = data;
-            $scope.tracks = data.tracks;
-            utilsService.updateTracksLikes(data.tracks, true);
-            utilsService.updateTracksReposts(data.tracks, true);
+            
+            if ($scope.shared) {
+                setListenedTracks(data);
+                
+            } else {
+                setData(data);
+            
+            }
+            
         }, function(error) {
             console.log('error', error);
+            
         }).finally(function(){
-            $rootScope.isLoading = false;
+            
+            if (!$scope.shared) {
+                $rootScope.isLoading = false;
+            }
+        
             utilsService.setCurrent();
+            
         });
+        
+    function setListenedTracks(data) {
+            
+        SNapiService.getTracksListened($scope.playlistId)
+            .then(function(snData) {
+    
+                for (var j=0; j<data.tracks.length; j++) {
+                    var track = data.tracks[j];
+                    track.listened = false;
+                    
+                    for (var i=0; i<snData.length; i++) {
+                    
+                        if (track.id == parseInt(snData[i].trackId)) {
+                            track.listened = (snData[i].listened == 'true');
+                            break;
+                        }
+                    }
+                    
+                }
+                
+                setData(data);
+    
+            }, function(error) {
+                console.log('error', error);
+            
+            })
+            .finally(function() {
+                $rootScope.isLoading = false;
+            });
+    
+    
+    }
+    
+    function setData(data) {
+        
+        $scope.data = data;
+        $scope.tracks = data.tracks;
+        utilsService.updateTracksLikes(data.tracks, true);
+        utilsService.updateTracksReposts(data.tracks, true);    
+        
+    }
 
     /**
      * Responsible to remove track from a particular playlist
@@ -52,7 +105,7 @@ app.controller('PlaylistCtrl', function (
      */
     $scope.removeFromPlaylist = function(trackId) {
     
-        var endpoint = 'users/'+  $rootScope.userId + '/playlists/'+ playlistId
+        var endpoint = 'users/'+  $rootScope.userId + '/playlists/'+ $scope.playlistId
             , params = '';
 
         SCapiService.get(endpoint, params)
@@ -110,7 +163,7 @@ app.controller('PlaylistCtrl', function (
      */
     $scope.removeTrackRequest = function(trackId) {
         
-        SNapiService.removeTrackFromPlaylist(trackId, playlistId)
+        SNapiService.removeTrackFromPlaylist(trackId, $scope.playlistId)
             .then(function(data) {
                 notificationFactory.success("Successfully created remove request!");
                 /* TODO - display 'pending' on remove control, so user doesn't hit it multiple times */
@@ -122,5 +175,5 @@ app.controller('PlaylistCtrl', function (
             });
     
     };
-    
+     
 });

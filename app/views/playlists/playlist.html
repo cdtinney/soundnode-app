@@ -28,13 +28,18 @@
                 <tracks data="track"/>
                 
                 <span ng-if="shared" class="songList_item_shared_controls">
+                
+                  <a listen-song data-playlist-id="{{ playlistId }}" data-track-id="{{ data.id }}"  
+                    listened="track.listened" ng-class="{ listened: track.listened }" title="{{ track.listened ? 'Unlisten' : 'Listen' }}">
+                    <i class="fa fa-check"></i>
+                  </a>
                   
-                  <a ng-if="isOwner == 'true'" ng-click="removeFromPlaylist(track.id)">
+                  <a class="songList_item_shared_controls_remove" ng-if="isOwner == 'true'" ng-click="removeFromPlaylist(track.id)">
                     <i class="fa fa-trash-o"></i> 
                     remove
                   </a>
                   
-                  <a ng-if="isOwner == 'false'" ng-click="removeTrackRequest(track.id)">
+                  <a class="songList_item_shared_controls_remove" ng-if="isOwner == 'false'" ng-click="removeTrackRequest(track.id)">
                     <i class="fa fa-trash-o"></i> 
                     remove request
                   </a>

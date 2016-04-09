@@ -207,6 +207,15 @@ div.active {
   }
 }
 
+.songList_item_shared_controls {
+
+  & .listened {
+    & > .fa {
+      color: $scColor;
+    }
+  }
+}
+
 .songList_item_additional_details {
     & .songList_item_genre {
         position: absolute;
@@ -231,12 +240,21 @@ div.active {
 }
 
 .songList_item_shared_controls {
-  display: inline-block;
-  float: right;
   font-size: 12px;
+  width: 100%;
+  
+  & .songList_item_shared_controls_listened {
+    float: left;
+  }
+  
+  & .songList_item_shared_controls_remove {
+    float: right;
+  }
+  
   & a:hover {
     cursor: pointer;
   }
+  
 }
 
 @-webkit-keyframes heartBeat {
