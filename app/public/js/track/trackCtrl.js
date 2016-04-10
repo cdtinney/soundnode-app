@@ -72,7 +72,8 @@ app.controller('TrackCtrl', function (
             return true;
         }
         
-        return comment.body.indexOf($scope.keyword) != -1;
+        var keyword = $scope.keyword.toLowerCase();
+        return comment.body.toLowerCase().indexOf($scope.keyword) != -1;
         
     };
 
