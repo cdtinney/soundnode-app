@@ -1,6 +1,17 @@
 "use strict"
 
-app.controller('PlaylistTracksCtrl', function($rootScope, $scope, SCapiService, SC2apiService, SNapiService, $log, $window, $http, ngDialog, notificationFactory) {
+app.controller('PlaylistTracksCtrl', function(
+    $rootScope, 
+    $scope, 
+    $log,
+    $window, 
+    $http, 
+    SCapiService, 
+    SC2apiService, 
+    SNapiService, 
+    ngDialog, 
+    notificationFactory
+) {
 
     $scope.data = '';
     
@@ -24,8 +35,9 @@ app.controller('PlaylistTracksCtrl', function($rootScope, $scope, SCapiService, 
             
                 $scope.data = data;
                 
-                // Inject some Soundnode data into the collection for use by the templated view
-                mergeTrackRequestInfo(snData, data);
+                // Inject some Soundnode data into the collection for use by the template
+                // TODO - Don't display anything until username fetching is complete (at a minimum, make it async)
+                mergeTrackRequestInfo(snData);
                 
             })
             .catch(function (error) {
@@ -34,21 +46,32 @@ app.controller('PlaylistTracksCtrl', function($rootScope, $scope, SCapiService, 
             
     }
     
-    function mergeTrackRequestInfo(snData, data) {
+    function mergeTrackRequestInfo(snData) {
         
-        if (snData.length !== data.length) {
+        if (snData.length !== $scope.data.length) {
             $log.log("[mergeTrackRequestInfo] Soundnode track length != SoundCloud track length");
             return;
         }
         
         for (var i=0; i<snData.length; i++) {
         
-            data[i].requestType = snData[i].requestType;
-            
-            /* TODO - fetch usernames */
-            data[i].userId = snData[i].userId;
+            $scope.data[i].requestType = snData[i].requestType;
+            mergeTrackRequestUser(i, snData[i].userId);
         
         }
+    
+    }
+    
+    function mergeTrackRequestUser(index, userId) {
+            
+        SCapiService.getProfile(userId)
+            .then(function(response) {                
+                $scope.data[index].requestUsername = response.username;
+            
+            }, function(error) {
+                $log.log(error);
+                
+            });    
     
     }
     
