@@ -3,6 +3,7 @@ app.controller('TrackCtrl', function (
     SCapiService,
     $rootScope,
     $stateParams,
+    notificationFactory,
     utilsService
 ) {
     var songId = $stateParams.id;
@@ -36,15 +37,22 @@ app.controller('TrackCtrl', function (
             $rootScope.isLoading = false;
             utilsService.setCurrent();
         });
+        
+    function getComments() {
 
-    SCapiService.get('tracks/' + songId + '/comments', 'linked_partitioning=1&limit=30')
-        .then(function(data) {
-            $scope.comments = data.collection;
-        }, function(error) {
-            console.log('error', error);
-        }).finally(function() {
-            $rootScope.isLoading = false;
-        });
+        SCapiService.getComments(songId)
+            .then(function(data) {
+                $scope.comments = data.collection;
+                console.log(data.collection);
+            }, function(error) {
+                console.log('error', error);
+            }).finally(function() {
+                $rootScope.isLoading = false;
+            });
+    
+    }
+    
+    getComments();
 
     $scope.loadMore = function() {
         if ( $scope.busy ) {
@@ -66,14 +74,51 @@ app.controller('TrackCtrl', function (
             });
     };
     
+    $scope.postComment = function() {
+        
+        // TODO - sanitize input
+        var body = $scope.newComment;
+        if (body === undefined) {
+            return;
+        }
+        
+        // TODO - user input or current time (if playing)
+        var timestamp = 0; 
+        
+        SCapiService.postComment(songId, body, timestamp)
+            .then(function(response) {
+            
+                if ( typeof response === 'object' ) {
+                    notificationFactory.success("Comment posted!");
+                    
+                    // Clear the search keyword, if present
+                    $scope.keyword = undefined;
+                    
+                    // Update the comments
+                    getComments();
+                    
+                }
+                
+            }, function(error) {
+                notificationFactory.error("Something went wrong!");
+                
+            }).finally(function() {
+                $scope.newComment = undefined;
+            
+            });
+        
+    };
+    
     $scope.commentFilter  = function(comment) {
     
         if ($scope.keyword === undefined || comment.body === undefined) {
             return true;
         }
         
+        
         var keyword = $scope.keyword.toLowerCase();
-        return comment.body.toLowerCase().indexOf($scope.keyword) != -1;
+        return comment.body.toLowerCase().indexOf($scope.keyword) != -1 ||
+            comment.user.username === keyword;
         
     };
 

@@ -553,5 +553,62 @@ app.service('SCapiService', function (
                 return $q.reject(response.data);
             });
     };
-
+    
+    /** 
+    * Get comments for a track.
+     * @param  {string} songId
+     * @return {promise}
+     */
+    this.getComments = function(songId) {
+    
+        var url = 'https://api.soundcloud.com/tracks/' + songId + '/comments?linked_partitioning=1&limit=50' + '?&oauth_token=' + $window.scAccessToken,
+            that = this;
+            
+        return $http.get(url)
+            .then(function (response) {
+                if (typeof response.data === 'object') {
+                    if (response.data.next_href !== null || response.data.next_href !== undefined) {
+                        that.next_page = response.data.next_href;
+                        console.log(that.next_page);
+                    }
+                    return response.data;
+                } else {
+                    // invalid response
+                    return $q.reject(response.data);
+                }
+            }, function (response) {
+                // something went wrong
+                return $q.reject(response.data);
+            });
+    
+    };
+    
+    /** 
+    * Posts a comment on a track.
+     * @param  {string} songId
+     * @param  {integer} comment body (unsanitized)
+     * @param  {integer} timestamp
+     * @return {promise}
+     */
+     this.postComment = function(songId, body, timestamp) {
+    
+        var url = 'https://api.soundcloud.com/tracks/' + songId + '/comments' + '?oauth_token=' + $window.scAccessToken;
+            
+        return $http.post(url, {
+            comment: {body: body, timestamp: timestamp}
+        })
+            .then(function (response) {
+                if (typeof response.data === 'object') {
+                    return response.data;
+                } else {
+                    // invalid response
+                    return $q.reject(response.data);
+                }
+            }, function (response) {
+                // something went wrong
+                return $q.reject(response.data);
+            });
+     
+     };
+     
 });

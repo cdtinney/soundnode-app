@@ -81,7 +81,7 @@
         
           <div class="postCommentContainer">
             <div class="postComment">
-                <form class="postComment-form">
+                <form ng-submit="postComment()" class="postComment-form">
                     <input type="comment" placeholder="Write a comment" id="postComment" class="postComment_field"
                            ng-model="newComment" ng-model-options="{debounce: 350}">
                     <i class="fa fa-comment-o postComment-icon"></i>
