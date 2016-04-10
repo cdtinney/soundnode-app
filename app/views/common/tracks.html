@@ -27,7 +27,10 @@
 </div>
 
 <section class="songList_item_inner">
-    <h2 class="songList_item_song_tit selectable-text" title="{{ data.title }}" ui-sref="track({id: {{data.id}}})">{{ data.title }}</h2>
+
+    <h2 class="songList_item_song_tit selectable-text" title="{{ data.title }}" ui-sref="track({ id: data.id, sharedPlaylistId: sharedPlaylistId })">
+      {{ data.title }}
+    </h2>
 
     <h3 class="songList_item_song_info clearfix">
         <div class="songList_item_song_user selectable-text">

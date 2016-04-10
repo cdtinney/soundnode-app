@@ -25,7 +25,8 @@
 
             <li class="songList_item" ng-repeat="track in tracks | orderBy: sortBy : sortByOrder" ng-if="track.kind == 'track' && track.streamable" id="{{ track.id }}" >
             
-                <tracks data="track"/>
+                <tracks ng-if="shared" data-shared-playlist-id="data.id" data="track"/>
+                <tracks ng-if="!shared" data="track"/>
                 
                 <span ng-if="shared" class="songList_item_shared_controls">
                 

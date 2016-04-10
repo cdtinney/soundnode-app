@@ -65,6 +65,7 @@
          infinite-scroll-immediate-check='false' >
          
         <h2>Comments ({{track.comment_count}})</h2>
+          
         <span class="commentSorting">
           <span>Sort by:</span>
           <select ng-model="sortBy" ng-init="sortBy = 'created_at'">
@@ -76,6 +77,13 @@
             <option value="">Ascending</option>
           </select>
         </span>
+        
+        <div ng-show="sharedPlaylistUsers" class="sharedUsers">        
+          <label for="sharedUsersOnly">
+              <input type="checkbox" name="sharedUsersOnly" id="sharedUsersOnly" ng-model="sharedUsersOnly" ng-change="filter($event)">
+              <span>Only collaborator comments</span>
+          </label>      
+        </div>
         
         <div class="inputContainer">
         
@@ -106,7 +114,7 @@
         <div class="commentsContainer">
             <div class="comment" ng-repeat="comment in comments | 
               orderBy: sortBy: sortByOrder | 
-              filter: commentFilter:comment">
+              filter: commentSearchFilter:comment | filter: commentUserFilter:comment">
                 <img ng-src="{{comment.user.avatar_url}}" alt="{{comment.user.username}}" class="user_thumb" ui-sref="profile({ id: comment.user.id })">
 
                 <h3>

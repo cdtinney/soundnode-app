@@ -98,18 +98,23 @@
             display: inline;
         }
         
+        & .sharedUsers {
+          font-size: 1.2em;
+          margin: 10px 0 0 20px;
+        }
+        
         & .commentSorting {
-            float: right;
-            font-size: 1.2em;
-            
-            & span {
-                margin-right: 3px;
-            }
-            
-            & select {
-                background-color: $defaultColor;
-                color: #000;
-            }
+          float: right;
+          font-size: 1.2em;
+          
+          & span {
+              margin-right: 3px;
+          }
+          
+          & select {
+              background-color: $defaultColor;
+              color: #000;
+          }
         }
         
         & .inputContainer {

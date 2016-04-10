@@ -1,16 +1,19 @@
 app.controller('TrackCtrl', function (
     $scope,
-    SCapiService,
     $rootScope,
     $stateParams,
-    notificationFactory,
-    utilsService
+    SCapiService,
+    SNapiService,
+    utilsService,
+    notificationFactory
 ) {
     var songId = $stateParams.id;
+    var sharedPlaylistId = $stateParams.sharedPlaylistId;
     $scope.hover = false;
 
     $scope.track = '';
     $scope.busy = false;
+    $scope.sharedPlaylistUsers = undefined;
 
     SCapiService.get('tracks/' + songId)
         .then(function(data) {
@@ -49,9 +52,26 @@ app.controller('TrackCtrl', function (
                 $rootScope.isLoading = false;
             });
     
-    }
-    
+    }    
     getComments();
+   
+    if (sharedPlaylistId !== undefined && sharedPlaylistId !== null) {
+    
+        SNapiService.users(sharedPlaylistId)
+            .then(function(data) {
+            
+                $scope.sharedPlaylistUsers = {};
+                for (var i=0; i<data.length; i++) {
+                    var userId = parseInt(data[i].userId);
+                    $scope.sharedPlaylistUsers[userId] = data[i];
+                }
+            
+            }, function(error) {
+                console.log('error', error);
+                
+            });
+    
+    }
 
     $scope.loadMore = function() {
         if ( $scope.busy ) {
@@ -108,12 +128,18 @@ app.controller('TrackCtrl', function (
         
     };
     
-    $scope.commentFilter  = function(comment) {
+    $scope.commentUserFilter = function(comment) {
+    
+        if ($scope.sharedPlaylistUsers === undefined || !$scope.sharedUsersOnly) return true;        
+        return $scope.sharedPlaylistUsers[comment.user.id] !== undefined;
+        
+    };
+    
+    $scope.commentSearchFilter  = function(comment) {
     
         if ($scope.keyword === undefined || comment.body === undefined) {
             return true;
         }
-        
         
         var keyword = $scope.keyword.toLowerCase();
         return comment.body.toLowerCase().indexOf($scope.keyword) != -1 ||

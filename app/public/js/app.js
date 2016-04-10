@@ -42,7 +42,7 @@ app.config(function (
             controller: 'TracksCtrl'
         })
         .state('track', {
-            url: '/track/:id',
+            url: '/track/:id?sharedPlaylistId',
             templateUrl: 'views/track/track.html',
             controller: 'TrackCtrl'
         })

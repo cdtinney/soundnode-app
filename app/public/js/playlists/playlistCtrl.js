@@ -23,7 +23,7 @@ app.controller('PlaylistCtrl', function (
     $scope.data = '';
     $scope.tracks = '';
     $scope.isOwner = $stateParams.isOwner;
-    $scope.shared = $stateParams.shared;
+    $scope.shared = $stateParams.shared === 'true';
     $scope.isPlaylist = true;
     
     SCapiService.get('me/playlists/' + $scope.playlistId)

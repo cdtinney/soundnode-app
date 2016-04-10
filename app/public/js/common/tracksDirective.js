@@ -6,7 +6,8 @@ app.directive('tracks', function () {
         scope: {
             data: '=',
             user: '=',
-            type: '='
+            type: '=',
+            sharedPlaylistId: '='
         },
         templateUrl: "views/common/tracks.html"
     };
