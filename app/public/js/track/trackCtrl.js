@@ -43,7 +43,6 @@ app.controller('TrackCtrl', function (
         SCapiService.getComments(songId)
             .then(function(data) {
                 $scope.comments = data.collection;
-                console.log(data.collection);
             }, function(error) {
                 console.log('error', error);
             }).finally(function() {
