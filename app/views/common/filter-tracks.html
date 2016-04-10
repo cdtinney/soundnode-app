@@ -41,4 +41,10 @@
             <strong title="filter tracks by downloadable">Downloads only</strong>
         </label>
     </li>
+    <li ng-show="isSharedPlaylist">
+        <label for="unlistened">
+            <input type="checkbox" name="unlistened" id="unlistened" ng-model="unlistened" ng-change="filter($event)">
+            <strong title="filter tracks by unlistened">Unlistened tracks only</strong>
+        </label>
+    </li>
 </ul>

@@ -10,7 +10,8 @@ app.directive('filterTracks', function (
         },
         link : function (scope, element, attrs) {
         
-            var isPlaylist = attrs.isPlaylist || false;
+            scope.isPlaylist = attrs.isPlaylist == 'true' || false;
+            scope.isSharedPlaylist = attrs.isSharedPlaylist == 'true' || false;
 
             /**
              * Filter and return an new array of tracks
@@ -69,13 +70,24 @@ app.directive('filterTracks', function (
                 
                 return downloadable === true;
             }
+            
+            /**
+             * Filter and return a new array of the tracks that have not been listened to yet.
+             * @param obj [track data]
+             * @returns {boolean}
+             */
+            function filterByUnlistened(obj) {
+                var listened = (obj.track !== undefined) ? obj.track.listened : obj.listened;   
+                
+                return listened === false;
+            }
 
             /**
              * Filter tracks - stream 
              */
             scope.filter = function() {
             
-                if (isPlaylist == "true") {
+                if (scope.isPlaylist) {
                     scope.filterPlaylist();
                     return;
                 }
@@ -133,6 +145,10 @@ app.directive('filterTracks', function (
                 
                 if ( scope.downloads ) {
                     scope.tracks = scope.data.tracks.filter(filterByDownloads);
+                }
+                
+                if ( scope.unlistened ) {
+                    scope.tracks = scope.data.tracks.filter(filterByUnlistened);
                 }
 
                 utilsService.setCurrent();
