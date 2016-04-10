@@ -37,7 +37,7 @@ app.controller('PlaylistCtrl', function (
             }
             
             if ($scope.shared) {
-                setListenedTracks(data);
+                getTracksListened(data);
                 
             } else {
                 setData(data);
@@ -57,7 +57,7 @@ app.controller('PlaylistCtrl', function (
             
         });
         
-    function setListenedTracks(data) {
+    function getTracksListened(data) {
             
         SNapiService.getTracksListened($scope.playlistId)
             .then(function(snData) {

@@ -33,6 +33,11 @@ app.controller('PlaylistsCtrl', function (
                 
                 }, function(error) {
                     console.log('error', error);
+                    
+                    // If we can't communicate with the Soundnode server,
+                    //  set the data anyways (including shared playlists)
+                    $scope.data = data;
+                    
                 });
                 
         }, function(error) {

@@ -29,7 +29,7 @@
                 
                 <span ng-if="shared" class="songList_item_shared_controls">
                 
-                  <a listen-song data-playlist-id="{{ playlistId }}" data-track-id="{{ data.id }}"  
+                  <a listen-song data-playlist-id="{{ data.id }}" data-track-id="{{ track.id }}"  
                     listened="track.listened" ng-class="{ listened: track.listened }" title="{{ track.listened ? 'Unlisten' : 'Listen' }}">
                     <i class="fa fa-check"></i>
                   </a>
