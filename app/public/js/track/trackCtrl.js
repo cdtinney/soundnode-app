@@ -141,9 +141,9 @@ app.controller('TrackCtrl', function (
             return true;
         }
         
-        var keyword = $scope.keyword.toLowerCase();
-        return comment.body.toLowerCase().indexOf($scope.keyword) != -1 ||
-            comment.user.username === keyword;
+        var lowerCaseKeyword = $scope.keyword.toLowerCase();
+        return comment.body.toLowerCase().indexOf(lowerCaseKeyword) !== -1 ||
+            comment.user.username.toLowerCase() === lowerCaseKeyword;
         
     };
 
