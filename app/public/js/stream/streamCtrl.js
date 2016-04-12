@@ -58,6 +58,7 @@ app.controller('StreamCtrl', function (
                 $scope.data = $scope.data.concat(collection);
                 utilsService.updateTracksLikes(collection, true);
                 utilsService.updateTracksReposts(collection, true);
+                $scope.filter(false);
             }, function (error) {
                 console.log('error', error);
             }).finally(function () {
@@ -65,7 +66,7 @@ app.controller('StreamCtrl', function (
                 $rootScope.isLoading = false;
             });
     };
-
+    
     function filterCollection(data) {
         return data.collection.filter(function (item) {
             // Keep only tracks (remove playlists, etc)

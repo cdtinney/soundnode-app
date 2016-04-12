@@ -16,11 +16,16 @@ app.controller('searchCtrl', function (
     SCapiService.search('tracks', limit, $stateParams.q)
         .then(function(data) {
             $scope.data = data.collection;
+            
+            
         }, function(error) {
             console.log('error', error);
         }).finally(function(){
             utilsService.updateTracksReposts($scope.data);
             $rootScope.isLoading = false;
+                
+            // Apply filters again
+            $scope.filter();
         });
 
     $scope.loadMore = function() {
