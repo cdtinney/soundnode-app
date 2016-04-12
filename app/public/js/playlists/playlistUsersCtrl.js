@@ -6,7 +6,11 @@ app.controller('PlaylistUsersCtrl', function($rootScope, $scope, SCapiService, S
 
     SNapiService.users($scope.playlistId)
         .then(function(response) {
-            $scope.data = response;
+        
+            // Don't display the owners username
+            $scope.data = response.filter(function(object) {
+                return object.userId != $rootScope.userId;
+            });
             
         }, function(error) {
             $log.log('error', error);
