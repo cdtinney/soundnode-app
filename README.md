@@ -1,5 +1,12 @@
-[![Stories in Ready](https://badge.waffle.io/Soundnode/soundnode-app.png?label=roadmap&title=roadmap)](https://waffle.io/Soundnode/soundnode-app)
-Soundnode App
+Soundnode App - Fork
+============
+
+This is a fork of the project created for my final year Honour's Project at Carleton University. The goal was to implement the following usability improvements:
+* Shared playlists
+* Searchable and sortable comments
+* Additional stream/search filters and sorting
+
+Soundnode App - Original
 ============
 
 Soundnode App is an Open-Source project to support Soundcloud for desktop Mac, Windows, and Linux. <br>
