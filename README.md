@@ -6,6 +6,8 @@ This is a fork of the project created for my final year Honour's Project at Carl
 * Searchable and sortable comments
 * Additional stream/search filters and sorting
 
+Additionally, this was a good opportunity to learn AngularJS.
+
 Soundnode App - Original
 ============
 
